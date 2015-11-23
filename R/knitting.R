@@ -103,20 +103,20 @@ plot_hook_textpos <- function (x, options) {
 
 #' Print LaTeX commands for typesetting a data frame as a table
 #'
-#' This is a helper function for using \code{xtable} in a knitting environment. 
-#' It wrangles the bizarre division of options between 
-#' \code{\link[xtable]{xtable}} and \code{\link[xtable]{print.xtable}} and 
+#' This is a helper function for using \code{xtable} in a knitting environment.
+#' It wrangles the bizarre division of options between
+#' \code{\link[xtable]{xtable}} and \code{\link[xtable]{print.xtable}} and
 #' ensures as-is output for knitting.
 #'
 #' @param x a data frame. Convert matrices and contingency tables yourself.
 #'
 #' @param digits the number of digits after the decimal point.
 #'
-#' @param alignment a single-element character vector giving the sequence of   
-#' column alignments according to the \code{tabular} syntax in LaTeX (\code{l, c, r}   
-#' for left, center, right, and \code{p{dim}} for text wrapped in a box of    
-#' width \code{dim}---for example \code{p{2 in}}). By default numeric columns are  
-#' right aligned and the rest are left aligned.                          
+#' @param alignment a single-element character vector giving the sequence of
+#' column alignments according to the \code{tabular} syntax in LaTeX (\code{l, c, r}
+#' for left, center, right, and \code{p{dim}} for text wrapped in a box of
+#' width \code{dim}---for example \code{p{2 in}}). By default numeric columns are
+#' right aligned and the rest are left aligned.
 #'
 #' @param include.colnames whether to print the data frame column names
 #' as column headers. It often makes sense to assign something
@@ -176,14 +176,14 @@ print_tabular <- function (x, digits=0,
 
 #' A shortcut for printing out linear models as tables
 #'
-#' This routine wraps \code{\link[stargazer]{stargazer}}, adjusting some 
+#' This routine wraps \code{\link[stargazer]{stargazer}}, adjusting some
 #' options and ensuring as-is output when knitting.
 #'
 #' @param ... passed on to \code{stargazer}. The first parameter is the model.
 #'
-#' @return LaTeX table code marked with class \code{asis_output} 
+#' @return LaTeX table code marked with class \code{asis_output}
 #'
-#' @export 
+#' @export
 #'
 print_lm <- function (...) {
     stopifnot(requireNamespace("stargazer", quietly=TRUE))
