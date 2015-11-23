@@ -1,14 +1,13 @@
-Package: ragoldst
-Title: My Miscellaneous R Utilities
+Package: ragoldst-beamer
+Title: Miscellaneous R Utilities for Beamer Presentations
 Version: 0.0.1
 Authors@R: person("Andrew", "Goldstone", email = "andrew.goldstone@gmail.com", role = c("aut", "cre"))
-Description: This package gathers my perpetual R bits and pieces in one place. I am sure this arrangement will last.
+Description: This package includes some utilities for styling and laying out beamer presentations.
 Depends:
     R (>= 3.2.2),
-    ggplot2,
     knitr,
-    xtable
-Suggests:
-    stargazer
+    ragoldst
+Imports:
+    ggplot2,
 License: GPL3
 LazyData: true
