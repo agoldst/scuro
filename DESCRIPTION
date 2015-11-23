@@ -1,4 +1,4 @@
-Package: ragoldst-beamer
+Package: ragoldstBeamer
 Title: Miscellaneous R Utilities for Beamer Presentations
 Version: 0.0.1
 Authors@R: person("Andrew", "Goldstone", email = "andrew.goldstone@gmail.com", role = c("aut", "cre"))
