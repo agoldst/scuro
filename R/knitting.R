@@ -11,7 +11,7 @@ output_hook_routput <- function (x, options) {
             ""),
           collapse="\n")
 }
- 
+
 #' Plot placement and resizing hook
 #'
 #' Not called directly but automatically set as knitr's plot hook.
@@ -50,7 +50,7 @@ output_hook_routput <- function (x, options) {
 #' with some costs in flexibility.
 #'
 #' @export
-#' 
+#'
 plot_hook_textpos <- function (x, options) {
     inside <- options$inside_textblock
     pos <- options$textblock_pos
@@ -94,7 +94,7 @@ plot_hook_textpos <- function (x, options) {
         paste0(b, gfx, e)
     }
     else {
-        plot_hook_default(x, options)
+        ragoldst_local$plot_hook_default(x, options)
     }
 }
 
