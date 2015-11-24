@@ -98,6 +98,8 @@ scuro_format <- function (
         pandoc_args=c("--filter", overlay_filter, pandoc_args)
     )
 
+    result$pandoc$ext <- paste0("-", output, ".pdf")
+
     # this knit_hooks fiddling code is closely modeled on
     # https://github.com/rstudio/rmarkdown/blob/master/R/tufte_handout.R
 
@@ -131,6 +133,7 @@ scuro_format <- function (
     knitr_options$knit_hooks$tikz_xelatex <- tikz_setup_hook
 
     result$knitr <- knitr_options
+
     result
 }
 
