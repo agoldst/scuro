@@ -9,7 +9,7 @@
 rmds := $(wildcard *.Rmd)
 slides := $(patsubst %.Rmd,%-slides.pdf,$(rmds))
 slides_key := $(patsubst %.Rmd,%-slides.key,$(rmds))
-handouts := $(patsubst %.Rmd,%-handouts.pdf,$(rmds))
+handouts := $(patsubst %.Rmd,%-handout.pdf,$(rmds))
 notes := $(patsubst %.Rmd,%-notes.pdf,$(rmds))
 
 all: $(slides) $(handouts) $(notes)
@@ -25,7 +25,7 @@ all_key: all $(slides_key)
 $(slides): %-slides.pdf: %.Rmd
 	R -e 'rmarkdown::render("$<", "ragoldstBeamer::slides", "$@")'
 
-$(handouts): %-handouts.pdf: %.Rmd
+$(handouts): %-handout.pdf: %.Rmd
 	R -e 'rmarkdown::render("$<", "ragoldstBeamer::handout", "$@")'
 
 $(notes): %-notes.pdf: %.Rmd
