@@ -2,12 +2,17 @@ Package: ragoldstBeamer
 Title: Miscellaneous R Utilities for Beamer Presentations
 Version: 0.0.1
 Authors@R: person("Andrew", "Goldstone", email = "andrew.goldstone@gmail.com", role = c("aut", "cre"))
-Description: This package includes some utilities for styling and laying out beamer presentations.
+Description: This package includes some utilities for styling and laying out
+    beamer presentations.
 Depends:
-    R (>= 3.2.2),
-    knitr,
-    ragoldst
+    R (>= 3.2.2)
 Imports:
-    ggplot2,
+    knitr,
+    tikzDevice,
+    rmarkdown
+Suggests:
+    ggplot2 (>= 1.0.0)
 License: GPL3
+SystemRequirements: python
 LazyData: true
+RoxygenNote: 5.0.1
