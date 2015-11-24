@@ -3,7 +3,7 @@
 \name{slides}
 \alias{handout}
 \alias{notes}
-\alias{ragoldstBeamer_format}
+\alias{scuro_format}
 \alias{slides}
 \title{Presentation output formats}
 \usage{
@@ -13,10 +13,10 @@ notes(...)
 
 handout(...)
 
-ragoldstBeamer_format(output = c("slides", "notes", "handout"),
-  fig_width = 4.5, fig_height = 2.75, fig_crop = TRUE,
-  fig_caption = TRUE, dev = "tikz", highlight = "zenburn",
-  keep_tex = FALSE, latex_engine = "xelatex", pandoc_args = NULL)
+scuro_format(output = c("slides", "notes", "handout"), fig_width = 4.5,
+  fig_height = 2.75, fig_crop = TRUE, fig_caption = TRUE, dev = "tikz",
+  highlight = "zenburn", keep_tex = FALSE, latex_engine = "xelatex",
+  pandoc_args = NULL)
 }
 \arguments{
 \item{output}{one of \code{"slides"}, \code{"notes"}, or \code{"handout"}}
@@ -45,12 +45,12 @@ debugging errors.}
 }
 \description{
 This package supplies three \pkg{rmarkdown} output formats,
-\code{ragoldstBeamer_format::slides}, \code{ragoldstBeamer_format::notes},
-and \code{ragoldstBeamer_format::handout}, which can be used in place of
+\code{scuro_format::slides}, \code{scuro_format::notes},
+and \code{scuro_format::handout}, which can be used in place of
 \code{output: beamer_presentation} in the YAML block of an Rmd file or as the
 \code{output_format} argument to \pkg{rmarkdown}'s
 \code{\link[rmarkdown]{render}} function. The options these formats accept
 are given by the parameters to these functions. \code{slides}, \code{notes},
-and \code{handout} pass their arguments on to \code{ragoldstBeamer_format}.
+and \code{handout} pass their arguments on to \code{scuro_format}.
 }
 
