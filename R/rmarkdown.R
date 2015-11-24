@@ -120,11 +120,15 @@ scuro_format <- function (
 
     # custom package hook option: use dark_plot_theme everywhere
     knitr_options$opts_chunk$dark_theme <- TRUE
+    if (dev == "tikz" && latex_engine == "xelatex") {
+        knitr_options$opts_chunk$tikz_xelatex <- TRUE
+    }
 
     # set hooks
     knitr_options$knit_hooks$plot <- plot_hook_textpos
     knitr_options$knit_hooks$output <- output_hook_routput
     knitr_options$knit_hooks$dark_theme <- set_dark_theme
+    knitr_options$knit_hooks$tikz_xelatex <- tikz_setup_hook
 
     result$knitr <- knitr_options
     result

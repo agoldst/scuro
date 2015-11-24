@@ -108,3 +108,29 @@ plot_hook_textpos <- function (x, options) {
         knitr::hook_plot_tex(x, options)
     }
 }
+
+
+tikz_setup_hook <- function (before, options, envir) {
+    if (before) {
+        options(tikzDefaultEngine="xetex")
+
+        # rmarkdown::metadata holds document yaml metadata when knitting
+        if (is.character(rmarkdown::metadata$mainfont)) {
+            fontline <- paste0("\\setmainfont{", rmarkdown::metadata$mainfont,
+                               "}\n")
+        } else {
+            fontline <- character()
+        }
+
+        # tikzDevice + xelatex
+        options(tikzXelatexPackages=c(
+            "\\usepackage{tikz}\n",
+            "\\usepackage[active,tightpage,xetex]{preview}\n",
+            "\\usepackage{fontspec,xunicode}\n",
+            fontline,
+            "\\PreviewEnvironment{pgfpicture}\n",
+            "\\setlength\\PreviewBorder{0pt}\n"))
+    }
+}
+
+
