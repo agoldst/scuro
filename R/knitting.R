@@ -109,7 +109,14 @@ plot_hook_textpos <- function (x, options) {
     }
 }
 
-
+#' TikZ and XeLaTeX wrangling hook
+#'
+#' This hook ensures that the \pkg{tikzDevice} package options are
+#' correctly set to use xelatex and the document main font to generate
+#' graphics. It is set as the `tikz_xelatex` hook and by default all
+#' chunks have `tikz_xelatex=T` among their options.
+#'
+#' @export 
 tikz_setup_hook <- function (before, options, envir) {
     if (before) {
         options(tikzDefaultEngine="xetex")
