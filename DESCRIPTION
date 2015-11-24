@@ -3,7 +3,7 @@ Title: Miscellaneous R Utilities for Beamer Presentations
 Version: 0.0.1
 Authors@R: person("Andrew", "Goldstone", email = "andrew.goldstone@gmail.com", role = c("aut", "cre"))
 Description: This package includes some utilities for styling and laying out
-    beamer presentations.
+    beamer presentations with a dark-on-light color scheme.
 Depends:
     R (>= 3.2.2)
 Imports:
