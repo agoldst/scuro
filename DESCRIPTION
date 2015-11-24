@@ -8,8 +8,8 @@ Depends:
     R (>= 3.2.2)
 Imports:
     knitr,
-    tikzDevice,
-    rmarkdown
+    rmarkdown,
+    tikzDevice
 Suggests:
     ggplot2 (>= 1.0.0)
 License: GPL3
