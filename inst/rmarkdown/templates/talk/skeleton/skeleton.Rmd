@@ -4,9 +4,9 @@ author: Talky Talker
 date: Day of the Talk
 mainfont: Gill Sans
 output:
-    - ragoldstBeamer::slides
-    - ragoldstBeamer::notes
-    - ragoldstBeamer::handout
+    - scuro::slides
+    - scuro::notes
+    - scuro::handout
 ---
 
 ```{r setup, include=F, cache=F}

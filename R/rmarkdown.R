@@ -1,40 +1,40 @@
 
 
 #' @export
-#' @rdname ragoldstBeamer_format
+#' @rdname scuro_format
 slides <- function (...) {
-    ragoldstBeamer_format(output="slides", ...)
+    scuro_format(output="slides", ...)
 }
 
 #' @export
-#' @rdname ragoldstBeamer_format
+#' @rdname scuro_format
 notes <- function (...) {
     dots <- list(...)
     dots$pandoc_args <- c(rmarkdown::pandoc_variable_arg("fontsize", "8pt"),
                           dots$pandoc_args)
     dots$output="notes"
-    do.call(ragoldstBeamer_format, dots)
+    do.call(scuro_format, dots)
 }
 
 #' @export
-#' @rdname ragoldstBeamer_format
+#' @rdname scuro_format
 handout <- function (...) {
     dots <- list(...)
     dots$pandoc_args <- c("-V", "handout", dots$pandoc_args)
     dots$output="handout"
-    do.call(ragoldstBeamer_format, dots)
+    do.call(scuro_format, dots)
 }
 
 #' Presentation output formats
 #'
 #' This package supplies three \pkg{rmarkdown} output formats,
-#' \code{ragoldstBeamer_format::slides}, \code{ragoldstBeamer_format::notes},
-#' and \code{ragoldstBeamer_format::handout}, which can be used in place of
+#' \code{scuro_format::slides}, \code{scuro_format::notes},
+#' and \code{scuro_format::handout}, which can be used in place of
 #' \code{output: beamer_presentation} in the YAML block of an Rmd file or as the
 #' \code{output_format} argument to \pkg{rmarkdown}'s
 #' \code{\link[rmarkdown]{render}} function. The options these formats accept
 #' are given by the parameters to these functions. \code{slides}, \code{notes},
-#' and \code{handout} pass their arguments on to \code{ragoldstBeamer_format}.
+#' and \code{handout} pass their arguments on to \code{scuro_format}.
 #'
 #' @param output one of \code{"slides"}, \code{"notes"}, or \code{"handout"}
 #'
@@ -61,7 +61,7 @@ handout <- function (...) {
 #' @param pandoc_args character vector of extra arguments to pandoc.
 #'
 #' @export
-ragoldstBeamer_format <- function (
+scuro_format <- function (
         output=c("slides", "notes", "handout"),
         fig_width=4.5,
         fig_height=2.75,
@@ -76,11 +76,11 @@ ragoldstBeamer_format <- function (
     output <- match.arg(output)
 
     hdr <- system.file(paste0("tex/preamble-", output, ".tex"),
-                       package="ragoldstBeamer")
-    tmpl <- system.file("pandoc/beamer.template", package="ragoldstBeamer")
+                       package="scuro")
+    tmpl <- system.file("pandoc/beamer.template", package="scuro")
 
     overlay_filter <- system.file("python/overlay_filter",
-                                  package="ragoldstBeamer")
+                                  package="scuro")
 
     result <- rmarkdown::beamer_presentation(
         toc=FALSE,

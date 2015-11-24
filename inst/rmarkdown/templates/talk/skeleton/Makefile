@@ -23,13 +23,13 @@ all_key: all $(slides_key)
 ## Knitting ##
 
 $(slides): %-slides.pdf: %.Rmd
-	R -e 'rmarkdown::render("$<", "ragoldstBeamer::slides", "$@")'
+	R -e 'rmarkdown::render("$<", "scuro::slides", "$@")'
 
 $(handouts): %-handout.pdf: %.Rmd
-	R -e 'rmarkdown::render("$<", "ragoldstBeamer::handout", "$@")'
+	R -e 'rmarkdown::render("$<", "scuro::handout", "$@")'
 
 $(notes): %-notes.pdf: %.Rmd
-	R -e 'rmarkdown::render("$<", "ragoldstBeamer::notes", "$@")'
+	R -e 'rmarkdown::render("$<", "scuro::notes", "$@")'
 
 ## Slides in Keynote format ##
 

@@ -95,10 +95,11 @@ dark_plot_theme <- function(base_size=9, base_family="",
 set_dark_theme <- function (before, options, envir) {
     if (requireNamespace("ggplot2", quietly=TRUE)) {
         if (before) {
-            ragoldst_local$gg_theme <- ggplot2::theme_get()
+            scuro_local$gg_theme <- ggplot2::theme_get()
             ggplot2::theme_set(dark_plot_theme())
         } else {
-            ggplot2::theme_set(ragoldst_local$gg_theme)
+            ggplot2::theme_set(scuro_local$gg_theme)
         }
     }
 }
+

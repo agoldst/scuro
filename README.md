@@ -5,17 +5,18 @@ This package provides [rmarkdown](http://rmarkdown.rstudio.com) formats and a te
 
 # The formats
 
-There are three formats: `ragoldstBeamer::slides`, 
-`ragoldstBeamer::notes`, and `ragoldstBeamer::handout`. Ordinarily these are used by adding, e.g. `output: ragoldstBeamer::slides` to the YAML metadata block at the start of your Rmd file.  To use all three, do something like
+There are three formats: `scuro::slides`, 
+`scuro::notes`, and `scuro::handout`. Ordinarily these are used by adding, e.g. `output: scuro::slides` to the YAML metadata block at the start of your Rmd file.  To use all three, do something like
 
 ```yaml
+mainfont: Gill Sans
 output:
-    - ragoldstBeamer::slides
-    - ragoldstBeamer::notes
-    - ragoldstBeamer::handout
+    - scuro::slides
+    - scuro::notes
+    - scuro::handout
 ```
 
-And then, in R,
+The choice of font is of course up to you, and depends on what you have available. Then, in R,
 
 ```R
 rmarkdown::render("talk.Rmd", "all")
@@ -25,7 +26,7 @@ RStudio does not seem to recognize multiple custom formats, so RStudio's "Knit" 
 
 The `slides` format creates slides for projection; the `notes` format creates sheets with two slides and two pages of accompanying notes (specified using beamer's `\note{}` command) each; and the `handout` format creates sheets with two slides and two blank spaces for audience notes each. One weakness of the dark-on-light scheme is that it doesn't look great on paper; I have been unable to come up with a general solution to this (e.g. automatically inverting graphics).
 
-You do not need to load the `ragoldstBeamer` library in your Rmd file.
+You do not need to load the `scuro` library in your Rmd file.
 
 ## Overlay specifications (incremental builds)
 
@@ -59,7 +60,7 @@ The package also includes an rmarkdown template demonstrating the features descr
 
 ```R
 rmarkdown::draft(file="lecture", template="talk",
-    package="ragoldstBeamer", edit=F)
+    package="scuro", edit=F)
 ```
 
 which creates a new directory called `lecture` under the working directory and places an R Markdown file in it with the demonstration code. It also includes a Makefile for command-line control (which I much prefer to R Markdown: RStudio and knitr are great, but they are not a build system). `make all` generates slides, notes, and handout in sequence. (Somewhat annoyingly, this requires re-running the code in your R chunks three times. If you have long-running data analyses, you may wish to do some manual cacheing---or use an an alternative scheme in which you knit to regular markdown only once and then use make to control the PDF conversions. I demonstrate the alternative in [another repository](https://github.com/agoldst/tex/blob/master/rmd-slides/).)
