@@ -97,9 +97,17 @@ set_dark_theme <- function (before, options, envir) {
         if (before) {
             scuro_local$gg_theme <- ggplot2::theme_get()
             ggplot2::theme_set(dark_plot_theme())
+
         } else {
             ggplot2::theme_set(scuro_local$gg_theme)
         }
+    }
+
+    if (before) {
+        scuro_local$par <- par("bg", "fg")
+        par(bg="gray10", fg="white")
+    } else {
+        par(scuro_local$par)
     }
 }
 
