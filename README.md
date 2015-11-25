@@ -58,7 +58,7 @@ Beamer supports what it calls "overlay specifications," that is, ways of generat
 
 ## Grid positioning
 
-The minimalism of markdown and the text-oriented nature of LaTeX combine to make any tweaking of the layout of slides quite tricky. This is supposed to be a feature: this whole generating-from-plain-text thing is supposed to enable you to avoid laying things out! Nonetheless, sometimes a slide really does need a more complex layout than the basically left-to-right, top-to-bottom text-like sequencing of markdown. This package lets you use the [textpos](http://ctan.org/pkg/textpos) LaTeX package's grid-positioning features in your markdown. It sets up a 9 x 8 grid (and LaTeX length units `\TPHorizModule` and `TPVertModule`), and you can use the LaTeX `textblock` environment in your markdown as normal:
+The minimalism of markdown and the text-oriented nature of LaTeX combine to make any tweaking of the layout of slides quite tricky. This is supposed to be a feature: this whole generating-from-plain-text thing is supposed to enable you to avoid laying things out! Nonetheless, sometimes a slide really does need a more complex layout than the basically left-to-right, top-to-bottom text-like sequencing of markdown. This package lets you use the [textpos](http://ctan.org/pkg/textpos) LaTeX package's grid-positioning features in your markdown. It sets up a 9 x 8 grid (and LaTeX length units `\TPHorizModule` and `\TPVertModule`), and you can use the LaTeX `textblock` environment in your markdown as normal:
 
 ```latex
 \begin{textblock}{2}(4,3)
@@ -72,9 +72,9 @@ knitr's chunk options for figures are also modified to interact with this. If a 
 
 A few further knitr [chunk options](http://yihui.name/knitr/options/) have different defaults from the built-in formats: `tidy` is off, `size` is `footnotesize` (which works out fine when you project the PDF) and `dev.args` is `list(pointsize=9)`. The package also sets up a custom option, `dark_theme`, which applies the `dark_plot_theme` contained in the package (see its help topic in R) to all ggplots. This is on by default, but if you wish to fall back to the ggplot default, set `dark_theme=F` (and/or simply add your own `theme()` to plots).
 
-The package defaults to TikZ graphics and the xelatex engine. This is slower than pdf graphics and pdflatex but visually worth it. If you are using TikZ but want to alter the tikzDevice options, note that the package installs a chunk hook to the `tikz_xelatex` option and sets all chunks to default to `tikz_xelatex=T`. Turn this off to change things (e.g. if you want a different font from the document main font in your graphics).
+The package defaults to TikZ graphics and the xelatex engine. This is slower than pdf graphics and pdflatex but visually worth it. If you are using TikZ but want to alter the tikzDevice options, note that the package installs a [chunk hook](http://yihui.name/knitr/hooks/) to the `tikz_xelatex` option and sets all chunks to default to `tikz_xelatex=T`. Turn this off to change things (e.g. if you want a different font from the document main font in your graphics; to see how to do this, look at [the code](R/knitting.R) for `tikz_setup_hook`).
 
-Otherwise, the underlying pandoc template is close to the default beamer template, with a few tweaks and a few choices I've made for you. In particular, note that graphics are *not* automatically scaled to the size of the slide, which I find to be a frequent source of mysterious errors. Some of the annoying beamer gewgaws are suppressed as well.
+Otherwise, the [underlying pandoc template](inst/pandoc/beamer.template) is close to the default beamer template, with a few tweaks and a few choices I've made for you. In particular, note that graphics are *not* automatically scaled to the size of the slide, which I find to be a frequent source of mysterious errors. Some of the annoying beamer gewgaws are suppressed as well.
 
 # "Scuro"?
 
