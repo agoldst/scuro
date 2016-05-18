@@ -36,6 +36,8 @@ scuro_md <- function (
         dev="tikz",
         plot_font="sansfont") {
 
+    # YAML defaults merged in by pandoc; can be overridden by source Rmd
+    yaml_defaults <- system.file("pandoc/default.yaml", package="scuro")
     result <- rmarkdown::md_document(
         # variant="markdown" and --standalone (always set by md_document)
         # together entail the preservation of the YAML block *by pandoc*
@@ -46,7 +48,7 @@ scuro_md <- function (
         fig_width=fig_width,
         fig_height=fig_height,
         dev=dev,
-        pandoc_args="--atx-headers"
+        pandoc_args=c(yaml_defaults, "--atx-headers")
     )
 
     # this knit_hooks fiddling code is closely modeled on
@@ -124,7 +126,8 @@ make <- function (target="all") {
         paste0("SLIDES_TMPL=", slides_template),
         paste0("SCRIPT_TMPL=", script_template), 
         "NOTES=notes_md", "SCRIPTS=scripts_md",
-        "-f", makefile,
+        "SCURO=\"\"",   # but rendering scuro_md ensure scuro: true in YAML
+        "-f", makefile, # UNLESS scuro: false is explicit in the source Rmd
         target
     ))
 
