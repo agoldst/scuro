@@ -2,11 +2,9 @@
 title: Talk of Talks
 author: Talky Talker
 date: Day of the Talk
-mainfont: Gill Sans
-output:
-    - scuro::slides
-    - scuro::notes
-    - scuro::handout
+sansfont: Gill Sans
+highlight: zenburn
+output: scuro::scuro_md
 ---
 
 ```{r setup, include=F, cache=F}
