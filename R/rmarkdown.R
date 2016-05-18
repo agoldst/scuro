@@ -45,7 +45,8 @@ scuro_md <- function (
         toc=FALSE,
         fig_width=fig_width,
         fig_height=fig_height,
-        dev=dev
+        dev=dev,
+        pandoc_args="--atx-headers"
     )
 
     # this knit_hooks fiddling code is closely modeled on
