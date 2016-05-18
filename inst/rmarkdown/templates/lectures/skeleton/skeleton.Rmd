@@ -1,6 +1,6 @@
 # README
 
-Place your R markdown sources for lectures in either the `notes` or `scripts` directories. This file is present because rmarkdown and RStudio require it in order to process the template without errors or warnings.
+Place your R markdown sources for lectures in either the `notes` or `scripts` directories. The file you are currently reading is present because rmarkdown and RStudio require it in order to process the template without errors or warnings. You can delete it freely now.
 
 Files in `notes` are processed into speaker notes, with pages containing two slides and their accompanying Beamer `\note{...}`s.
 
