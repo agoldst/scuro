@@ -48,9 +48,9 @@ kable(mtcars[1:5, 1:5],
       caption="Something about cars")
 ```
 
-#
+# \ 
 
-Blank first-level headers work fine.
+If you'd rather have a blank than a bold header in the script, use `# \ ` to terminate the slide. (An empty header is eliminated by knitting.) A new slide also terminates the previous slide, as in the following examples.
 
 ## an example graphic
 
@@ -58,8 +58,6 @@ Blank first-level headers work fine.
 ggplot(trees, aes(Girth, Height)) +
     geom_point(color="white")
 ```
-
-#
 
 ## ugly examples of custom placement and sizing
 
@@ -86,9 +84,11 @@ Text scaling: \\
 a cautionary tale.
 \end{textblock}
 
-#
+\vspace{8\TPVertModule}
 
-On the script, the `textpos` grid is shrunk down.
+# \
+
+On the script, the `textpos` grid is shrunk down. Note too that `textblock`s take up no vertical space, so to prevent overprinting in the script you must manually insert some vertical space. Unfortunately.
 
 ## example code display
 
