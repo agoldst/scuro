@@ -103,6 +103,8 @@ plot_hook_textpos <- function (x, options) {
         }
         gfx <- paste0("\\includegraphics", opt, "{", base_url, x, "}\n")
         paste0(b, gfx, e)
+        # TODO render inverted plot if requested and make it conditional
+        # for the handout using beamer modes
     }
     else {
         knitr::hook_plot_tex(x, options)
