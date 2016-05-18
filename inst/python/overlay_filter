@@ -107,7 +107,6 @@ def walk(x, action, format, meta):
 
 if __name__ == "__main__":
     input_stream = codecs.getreader("utf-8")(sys.stdin)
-        
     doc = json.loads(input_stream.read())
     if len(sys.argv) > 1:
         format = sys.argv[1]
