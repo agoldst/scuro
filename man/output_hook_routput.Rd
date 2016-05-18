@@ -7,9 +7,11 @@
 output_hook_routput(x, options)
 }
 \description{
-Not called directly but automatically set as knitr's output hook. This puts R
-output into an \code{ROutput} environment which it is up to you to define
-with something like 
-\code{\\DefineVerbatimEnvironment{ROutput}{Verbatim}{frame=single,fontsize=\\footnotesize}} (which is what's used in the included \code{talk} RMarkdown template).
+Not called directly but automatically set as knitr's output hook. This puts
+R output into an \code{ROutput} environment which it is up to you to define
+with something like
+\code{\\DefineVerbatimEnvironment{ROutput}{Verbatim}{frame=single,fontsize=\\footnotesize}}
+(which is what's in the included pandoc templates used with the
+\code{lectures} R Markdown template).
 }
 
