@@ -27,6 +27,11 @@
 #' @return an R Markdown output format used by
 #'   \code{\link[rmarkdown]{render}}.
 #'
+#' @seealso The included \code{lectures} R Markdown template for supporting
+#' files and example source. In RStudio, choose "File > New File > R
+#' Markdown...", choose "From Template," and select "Dark-on-Light Beamer
+#' Slides."
+#'
 #' @export
 scuro_md <- function (
         fig_width=4.5,

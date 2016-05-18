@@ -1,9 +1,8 @@
 Package: scuro
-Title: Miscellaneous R Utilities for Beamer Presentations
-Version: 0.0.1
+Title: An R Markdown Beamer-Presentation Setup
+Version: 0.1
 Authors@R: person("Andrew", "Goldstone", email = "andrew.goldstone@gmail.com", role = c("aut", "cre"))
-Description: This package includes some utilities for styling and laying out
-    beamer presentations with a dark-on-light color scheme.
+Description: This package provides a setup for creating beamer presentations with a dark-on-light color scheme from R markdown.
 Depends:
     R (>= 3.2.2)
 Imports:
@@ -11,7 +10,7 @@ Imports:
     rmarkdown,
     tikzDevice
 Suggests:
-    ggplot2 (>= 1.0.0)
+    ggplot2 (>= 2.0.0)
 License: GPL3
 SystemRequirements: python
 LazyData: true

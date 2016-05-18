@@ -37,4 +37,10 @@ and then control the subsequent PDF generation using a Makefile to
 govern pandoc and latex. That lets us generate multiple PDFs from a single
 R markdown source without re-knitting.
 }
+\seealso{
+The included \code{lectures} R Markdown template for supporting
+files and example source. In RStudio, choose "File > New File > R
+Markdown...", choose "From Template," and select "Dark-on-Light Beamer
+Slides."
+}
 

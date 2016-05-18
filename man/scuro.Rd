@@ -4,8 +4,20 @@
 \name{scuro}
 \alias{scuro}
 \alias{scuro-package}
-\title{Miscellaneous R Utilities for Beamer Presentations}
+\title{An R Markdown Beamer-Presentation Setup}
 \description{
-This package includes some utilities for styling and laying out beamer presentations.
+This package helps to produce beamer presentations with a dark-on-light
+theme, as well as to generate speaker notes or scripts and audience slide
+handouts from a single R markdown source. The included \code{lectures} R
+markdown template has example files demonstrating how to use what's here.
+}
+\examples{
+\dontrun{
+library(rmarkdown)
+draft("my-talks", "lectures", "scuro", edit=F) # or RStudio "New R Markdown"
+setwd("my-talks")
+system("make")       # or run make in the shell
+}
+
 }
 
