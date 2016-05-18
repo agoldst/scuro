@@ -94,6 +94,8 @@ dark_plot_theme <- function(base_size=9, base_family="",
 }
 
 set_dark_theme <- function (before, options, envir) {
+    if (!options$dark_theme) return()
+
     if (requireNamespace("ggplot2", quietly=TRUE)) {
         if (before) {
             scuro_local$gg_theme <- ggplot2::theme_get()
