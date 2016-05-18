@@ -39,10 +39,12 @@ dark_plot_theme <- function(base_size=9, base_family="",
     # axis options
     axis.line=ggplot2::element_blank(),
     axis.text.x=ggplot2::element_text(
-        size=ggplot2::rel(0.8), color=light, lineheight=0.9, vjust=1
+        size=ggplot2::rel(0.8), color=light, lineheight=0.9, vjust=1,
+        margin=grid::unit(0.5, "lines")
     ),
     axis.text.y=ggplot2::element_text(
-        size=ggplot2::rel(0.8), color=light, lineheight=0.9, vjust=1
+        size=ggplot2::rel(0.8), color=light, lineheight=0.9, vjust=1,
+        margin=grid::unit(0.5, "lines")
     ),
     axis.ticks=ggplot2::element_line(color=light, size=0.2),
     axis.title.x=ggplot2::element_text(
@@ -52,7 +54,6 @@ dark_plot_theme <- function(base_size=9, base_family="",
         size=ggplot2::rel(1), color=light, angle=90, vjust=0.5
     ),
     axis.ticks.length=grid::unit(0.3, "lines"),
-    axis.ticks.margin=grid::unit(0.5, "lines"),
 
     # legend options
     legend.background=ggplot2::element_rect(color=NA, fill=dark),
