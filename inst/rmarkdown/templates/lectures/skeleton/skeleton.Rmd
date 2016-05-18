@@ -1,0 +1,9 @@
+# README
+
+Place your R markdown sources for lectures in either the `notes` or `scripts` directories. This file is present because rmarkdown and RStudio require it in order to process the template without errors or warnings.
+
+Files in `notes` are processed into speaker notes, with pages containing two slides and their accompanying Beamer `\note{...}`s.
+
+Files in `scripts` are processed into scripts, with slide material interleaved with all the discursive text found between slides. Slides end with a first- level header, `#`.
+
+`notes/notes-sample.Rmd` and `scripts/script-sample.Rmd` are examples of these two possibilities. 

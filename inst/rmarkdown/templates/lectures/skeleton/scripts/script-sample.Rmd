@@ -1,0 +1,104 @@
+---
+title: Talk of Talks
+author: Talky Talker
+date: Day of the Talk
+sansfont: Gill Sans
+mainfont: Hoefler Text
+highlight: zenburn
+output: scuro::scuro_md
+---
+
+```{r setup, include=F, cache=F}
+library(knitr)
+# attempt to set a reasonable code output textwidth
+options(width=44)
+
+# recommended chunk options
+opts_chunk$set(
+    comment=NA, # no comment chars decorating code output
+    collapse=T, # multiple statements and output collapsed together
+    message=F,  # quit your chatter, R
+    warning=F,
+    error=F,    # stop on error: but this can get annoying
+    echo=F,     # hide chunk code by default
+    cache=T,
+    autodep=T
+)
+
+# load your favorite libraries
+library(ggplot2)
+
+dep_auto()
+```
+
+## an example text slide
+
+
+> - with an incremental
+> - build
+
+# First-level headers close slides
+
+They appear only in the script. The incremental build is collapsed in the script as well.
+
+## an example table
+
+```{r}
+kable(mtcars[1:5, 1:5],
+      caption="Something about cars")
+```
+
+#
+
+Blank first-level headers work fine.
+
+## an example graphic
+
+```{r graph, fig.cap="I think that I shall never see"}
+ggplot(trees, aes(Girth, Height)) +
+    geom_point(color="white")
+```
+
+#
+
+## ugly examples of custom placement and sizing
+
+```{r displaced, textblock_width=2.75, textblock_pos=c(0, 1), fig.height=3, fig.width=2, out.height=4, center=T}
+p <- ggplot(mtcars, aes(factor(cyl))) +
+    geom_bar(color="white", fill="grey40") +
+    xlab("Another car thing")
+p
+```
+
+\begin{textblock}{2.75}(3,2)
+
+Look! a dodgy three-column layout!
+
+With great layout power comes great, etc., etc.
+\end{textblock}
+
+\begin{textblock}{2.75}(6,1)
+```{r displaced-over, inside_textblock=T, center=T, out.width=2.75}
+p
+```
+
+Text scaling: \\
+a cautionary tale.
+\end{textblock}
+
+#
+
+On the script, the `textpos` grid is shrunk down.
+
+## example code display
+
+```{r code, echo=T}
+cor(anscombe$x1, anscombe$y1)
+cor(anscombe$x2, anscombe$y2)
+```
+
+Definitely don't need to visualize.
+
+# final remark
+
+Nonetheless, don't think plotting the data is synonymous with analyzing it. Let's discuss....
