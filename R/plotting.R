@@ -40,11 +40,11 @@ dark_plot_theme <- function(base_size=9, base_family="",
     axis.line=ggplot2::element_blank(),
     axis.text.x=ggplot2::element_text(
         size=ggplot2::rel(0.8), color=light, lineheight=0.9, vjust=1,
-        margin=grid::unit(0.5, "lines")
+        margin=ggplot2::margin(0.5, unit="lines")
     ),
     axis.text.y=ggplot2::element_text(
         size=ggplot2::rel(0.8), color=light, lineheight=0.9, vjust=1,
-        margin=grid::unit(0.5, "lines")
+        margin=ggplot2::margin(0.5, unit="lines")
     ),
     axis.ticks=ggplot2::element_line(color=light, size=0.2),
     axis.title.x=ggplot2::element_text(
@@ -73,7 +73,7 @@ dark_plot_theme <- function(base_size=9, base_family="",
     panel.border=ggplot2::element_rect(fill=NA, color=light),
     panel.grid.major=ggplot2::element_line(color=ramp(0.1)),
     panel.grid.minor=ggplot2::element_blank(),
-    panel.margin=grid::unit(0.25, "lines"),
+    panel.margin=ggplot2::margin(0.25, unit="lines"),
 
     # faceting options
     strip.background=ggplot2::element_rect(fill=ramp(0.1), color=light),
@@ -87,7 +87,7 @@ dark_plot_theme <- function(base_size=9, base_family="",
     # plot options
     plot.background=ggplot2::element_rect(color=dark, fill=dark),
     plot.title=ggplot2::element_text(size=ggplot2::rel(1.2), color=light),
-    plot.margin=grid::unit(c(1, 1, 0.5, 0.5), "lines")
+    plot.margin=ggplot2::margin(1, 1, 0.5, 0.5, unit="lines")
 
         )
     )
