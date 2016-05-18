@@ -67,7 +67,7 @@ import sys
 import json
 import codecs
 
-ov_pat = re.compile(r'^(\\\w+)(\{<[0-9-+,]+>})({.*)$', flags=re.DOTALL)
+ov_pat = re.compile(r'^(\\\w+)(\{<[^>]+>})(.*)$',flags=re.DOTALL)
 
 def overlay_filter(key, value, fmt, meta):
     if key == 'RawInline' and value[0] == 'tex':
