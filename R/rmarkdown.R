@@ -1,22 +1,40 @@
 #' Intermediate markdown format
 #'
+#' The strategy adopted by this package is to knit R markdown to markdown
+#' and then control the subsequent PDF generation using a Makefile to
+#' govern pandoc and latex. That lets us generate multiple PDFs from a single
+#' R markdown source without re-knitting.
+#'
 #' @param fig_width,fig_height default figure dimensions (inches). Note that
 #'   beamer slides have small "physical" dimensions: 128 mm x 96 mm or about 5
 #'   in x 3.75 in. The default values here are meant for slides with just one
 #'   figure on them (and possibly a title and a caption).
 #'
-#' @param fig_crop,fig_caption same as for the built-in
-#'   \code{\link[rmarkdown]{beamer_presentation}}
+#' @param fig_crop,latex_engine same as for the built-in
+#'   \code{\link[rmarkdown]{beamer_presentation}}, but XeLaTeX is the default
+#'   engine
 #'
 #' @param dev graphics device. \code{"tikz"} for TikZ graphics is the default,
 #'   since one of the main points of this package is to transcend bad beamer
 #'   fonts. This requires installing the \pkg{tikzDevice} package.
 #'
+#' @param plot_font if TikZ and XeLaTeX are used, the name of the main font for
+#' graphics. If \code{"sansfont"} (the default) or \code{"mainfont"}, the value
+#' of the corresponding document metadata field is used. If unspecified, the
+#' sans font is used if that has been specified. Otherwise we fall back to the
+#' LaTeX default.
+#'
+#' @return an R Markdown output format used by
+#'   \code{\link[rmarkdown]{render}}.
+#'
 #' @export
 scuro_md <- function (
         fig_width=4.5,
         fig_height=2.75,
-        dev="tikz") {
+        fig_crop=TRUE,
+        latex_engine="xelatex",
+        dev="tikz",
+        plot_font="sansfont") {
 
     result <- rmarkdown::md_document(
         # variant="markdown" and --standalone (always set by md_document)
@@ -58,7 +76,10 @@ scuro_md <- function (
     knitr_options$opts_chunk$dark_theme <- TRUE
     if (dev == "tikz" && latex_engine == "xelatex") {
         knitr_options$opts_chunk$tikz_xelatex <- TRUE
+        # custom option: plot_font (processed by tikz_setup_hook)
+        knitr_options$opts_chunk$plot_font <- plot_font
     }
+
 
     # set hooks
     knitr_options$knit_hooks$plot <- plot_hook_textpos
