@@ -1,6 +1,6 @@
 \documentclass[article,%
-$if(fontsize)$$fontsize$,$else$12pt,$$endif$%
-$if(papersize)$$papersize$paper,$else$letterpaper,$$endif$%
+$if(fontsize)$$fontsize$,$else$12pt,$endif$%
+$if(papersize)$$papersize$paper,$else$letterpaper,$endif$%
 $for(classoption)$$classoption$$sep$,$endfor$]{memoir}
 $if(fontfamily)$
 \usepackage[$for(fontfamilyoptions)$$fontfamilyoptions$$sep$,$endfor$]{$fontfamily$}
@@ -71,7 +71,7 @@ $if(title-meta)$
             pdftitle={$title-meta$},
 $endif$
 $if(author-meta)$
-            pdfauthor={$author-meta$},
+            pdfauthor={$if(anon)$$else$$author-meta$$endif$},
 $endif$
 $if(keywords)$
             pdfkeywords={$for(keywords)$$keywords$$sep$; $endfor$},
@@ -158,7 +158,6 @@ $else$
 \setkeys{Gin}{width=\maxwidth,height=\maxheight,keepaspectratio}
 $endif$
 \usepackage[multidot]{grffile} % handle image file names like img.2.pdf
-$endif$
 
 $if(links-as-notes)$
 % Make links footnotes instead of hotlinks:
