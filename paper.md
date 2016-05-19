@@ -1,27 +1,33 @@
 ---
 title: A Stylish Essay
-author: Focused Writer
-date: Well In Advance
+subtitle: If Not an Entirely Serious One
+author: Stylish Writer
+date: February, 1891
 mainfont: Garamond Premier Pro
 mainfontoptions:
 - Numbers=OldStyle
 - BoldFont=Garamond Premier Pro Semibold
 fontsize: 12pt
+classoption: [oneside]
 biblatex: true
 biblatex-chicago: true
 biblatexoptions: notes
-bibliography: sources.bib
+bibliography: ../sources.bib
+thanks: |
+    I am grateful to Oscar Wilde, naturally. For the text I have gone to
+    \url{http://marxists.org}, but see the bibliography.\nocite{wilde:soul}
 ---
 
 The chief advantage that would result from the establishment of Socialism is, undoubtedly, the fact that Socialism would relieve us from that sordid necessity of living for others which, in the present condition of things, presses so hardly upon almost everybody. In fact, scarcely anyone at all escapes.
 
-\symbolfootnote[0]{Oscar Wilde, naturally. For the text I have gone to \url{http://marxists.org}, but see the bibliography.\nocite{wilde:soul}}
 
 Now and then, in the course of the century, a great man of science, like Darwin; a great poet, like Keats; a fine critical spirit, like M. Renan; a supreme artist, like Flaubert, has been able to isolate himself, to keep himself out of reach of the clamorous claims of others, to stand ‘under the shelter of the wall,’ as Plato puts it, and so to realise the perfection of what was in him, to his own incomparable gain, and to the incomparable and lasting gain of the whole world. These, however, are exceptions. The majority of people spoil their lives by an unhealthy and exaggerated altruism – are forced, indeed, so to spoil them. They find themselves surrounded by hideous poverty, by hideous ugliness, by hideous starvation. It is inevitable that they should be strongly moved by all this. The emotions of man are stirred more quickly than man’s intelligence; and, as I pointed out some time ago in an article on the function of criticism, it is much more easy to have sympathy with suffering than it is to have sympathy with thought. Accordingly, with admirable, though misdirected intentions, they very seriously and very sentimentally set themselves to the task of remedying the evils that they see. But their remedies do not cure the disease: they merely prolong it. Indeed, their remedies are part of the disease.
 
 They try to solve the problem of poverty, for instance, by keeping the poor alive; or, in the case of a very advanced school, by amusing the poor.
 
 But this is not a solution: it is an aggravation of the difficulty. The proper aim is to try and reconstruct society on such a basis that poverty will be impossible. And the altruistic virtues have really prevented the carrying out of this aim. Just as the worst slave-owners were those who were kind to their slaves, and so prevented the horror of the system being realised by those who suffered from it, and understood by those who contemplated it, so, in the present state of things in England, the people who do most harm are the people who try to do most good; and at last we have had the spectacle of men who have really studied the problem and know the life – educated men who live in the East End – coming forward and imploring the community to restrain its altruistic impulses of charity, benevolence, and the like. They do so on the ground that such charity degrades and demoralises. They are perfectly right. Charity creates a multitude of sins.
+
+# There is also this to be said
 
 There is also this to be said. It is immoral to use private property in order to alleviate the horrible evils that result from the institution of private property. It is both immoral and unfair.
 
