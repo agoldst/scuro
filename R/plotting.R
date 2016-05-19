@@ -114,3 +114,16 @@ set_dark_theme <- function (before, options, envir) {
     }
 }
 
+set_theme_bw <- function (before, options, envir) {
+    if (!options$theme_bw) return()
+
+    if (requireNamespace("ggplot2", quietly=TRUE)) {
+        if (before) {
+            scuro_local$gg_theme <- ggplot2::theme_get()
+            ggplot2::theme_set(ggplot2::theme_bw())
+
+        } else {
+            ggplot2::theme_set(scuro_local$gg_theme)
+        }
+    }
+}
