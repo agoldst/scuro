@@ -361,8 +361,7 @@ $endfor$
 $if(title)$
 \begin{flushleft}
 {\MakeUppercase \thetitle} $if(subtitle)$ \\ $subtitle$$endif$
-$if(anon)$$else$$if(author)$\\ \theauthor$endif$$endif$
-$if(date)$\\ \thedate$endif$
+$if(anon)$$else$$if(author)$\\ \theauthor$endif$$endif$$if(date)$\\ \thedate$endif$
 \end{flushleft}
 $endif$
 $if(thanks)$$if(anon)$$else$
