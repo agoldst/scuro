@@ -24,6 +24,12 @@
 #' sans font is used if that has been specified. Otherwise we fall back to the
 #' LaTeX default.
 #'
+#' @param plot_font_options given a \code{plot_font}, font options. if
+#' \code{plot_font} is \code{"sansfont"} or \code{"mainfont"}, the
+#' corresponding font options will be used by default.
+#'
+#' @param scuro whether to apply the scuro color scheme to slides themselves.
+#'
 #' @return an R Markdown output format used by
 #'   \code{\link[rmarkdown]{render}}.
 #'
@@ -39,10 +45,17 @@ scuro_md <- function (
         fig_crop=TRUE,
         latex_engine="xelatex",
         dev="tikz",
-        plot_font="sansfont") {
+        plot_font="sansfont",
+        plot_font_options=NULL,
+        scuro=TRUE) {
 
     # YAML defaults merged in by pandoc; can be overridden by source Rmd
-    yaml_defaults <- system.file("pandoc/default.yaml", package="scuro")
+    if (scuro) {
+        yaml_defaults <- system.file("pandoc/default.yaml", package="scuro")
+    } else {
+        yaml_defaults <- system.file("pandoc/chiaro.yaml", package="scuro")
+    }
+
     result <- rmarkdown::md_document(
         # variant="markdown" and --standalone (always set by md_document)
         # together entail the preservation of the YAML block *by pandoc*
@@ -81,11 +94,12 @@ scuro_md <- function (
     knitr_options$opts_chunk$fig.path <- "../figure/"
 
     # custom package hook option: use dark_plot_theme everywhere
-    knitr_options$opts_chunk$dark_theme <- TRUE
+    knitr_options$opts_chunk$dark_theme <- scuro
     if (dev == "tikz" && latex_engine == "xelatex") {
         knitr_options$opts_chunk$tikz_xelatex <- TRUE
         # custom option: plot_font (processed by tikz_setup_hook)
         knitr_options$opts_chunk$plot_font <- plot_font
+        knitr_options$opts_chunk$plot_font_options <- plot_font_options
     }
 
 
@@ -99,6 +113,7 @@ scuro_md <- function (
 
     result
 }
+
 
 #' Convert scuro markdown to PDF slides, notes, scripts, and handouts
 #'
@@ -131,7 +146,7 @@ make <- function (target="all") {
         paste0("SLIDES_TMPL=", slides_template),
         paste0("SCRIPT_TMPL=", script_template), 
         "NOTES=notes_md", "SCRIPTS=scripts_md",
-        "SCURO=\"\"",   # but rendering scuro_md ensure scuro: true in YAML
+        "SCURO=\"\"",   # but rendering scuro_md ensures scuro: true in YAML
         "-f", makefile, # UNLESS scuro: false is explicit in the source Rmd
         target
     ))

@@ -129,14 +129,28 @@ tikz_setup_hook <- function (before, options, envir) {
         # rmarkdown::metadata holds document yaml metadata when knitting
 
         plotfont <- options$plot_font
+        plotfont_opt <- options$plot_font_options
         if (!is.character(plotfont) || plotfont == "sansfont") {
             plotfont <- rmarkdown::metadata$sansfont
+            if (is.null(plotfont_opt))  {
+                plotfont_opt <- rmarkdown::metadata$sansfontoptions
+            }
         } else if (plotfont == "mainfont") {
             plotfont <- rmarkdown::metadata$mainfont
+            if (is.null(plotfont_opt))  {
+                plotfont_opt <- rmarkdown::metadata$mainfontoptions
+            }
         }
 
         if (is.character(plotfont)) {
-            fontline <- paste0("\\setmainfont{", plotfont, "}\n")
+            fontline <- "\\setmainfont"
+            if (!is.null(plotfont_opt)) {
+                fontline <- paste0(fontline, "[",
+                    paste(plotfont_opt, collapse=","),
+                    "]"
+                )
+            }
+            fontline <- paste0(fontline, "{", plotfont, "}\n")
         } else {
             fontline <- character()
         }
