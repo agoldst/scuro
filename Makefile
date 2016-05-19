@@ -74,10 +74,10 @@ all: $(pdfs)
 clean:
 	rm -rf $(out_dir)/$(temp_dir)
 	rm -f $(texs)
-	-rmdir $(out_dir)
 
 # clean up everything including pdfs
 reallyclean: clean
 	rm -f $(pdfs)
+	-rmdir $(out_dir)
 
 .DEFAULT_GOAL := all
