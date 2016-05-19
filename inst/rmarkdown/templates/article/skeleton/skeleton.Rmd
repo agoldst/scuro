@@ -1,0 +1,24 @@
+---
+title: Essay
+author: Me
+date: '`r Sys.date()`'
+mainfont: Hoefler Text
+mainfontoptions: [Numbers=OldStyle]
+---
+
+```{r setup, cache=F}
+library(ggplot2)
+
+knitr::dep_auto()
+```
+
+# A very good typographical idea
+
+Now we are computing with cryptonite, my friends.
+
+```{r cars, fig.cap="Something about cars"}
+ggplot(mtcars) +
+    geom_point(aes(wt, mpg, color=factor(gear))) +
+    facet_wrap(~ am)
+```
+

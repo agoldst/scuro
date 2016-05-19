@@ -1,0 +1,4 @@
+name: "Memoir-based article class"
+description: "An article with figures and code"
+create_dir: true
+
