@@ -13,6 +13,7 @@ biblatex: true
 biblatex-chicago: true
 biblatexoptions: notes
 bibliography: ../sources.bib
+chicago-ellipses: true
 thanks: |
     I am grateful to Oscar Wilde, naturally. For the text I have gone to
     \url{http://marxists.org}, but see the bibliography.\nocite{wilde:soul}

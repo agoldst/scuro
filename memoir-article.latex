@@ -2,6 +2,7 @@
 $if(fontsize)$$fontsize$,$else$12pt,$endif$%
 $if(papersize)$$papersize$paper,$else$letterpaper,$endif$%
 $for(classoption)$$classoption$$sep$,$endfor$]{memoir}
+
 $if(fontfamily)$
 \usepackage[$for(fontfamilyoptions)$$fontfamilyoptions$$sep$,$endfor$]{$fontfamily$}
 $else$
@@ -118,6 +119,9 @@ $if(clearbib)$
 \AtEveryBibitem{%
     $for(clearbib)$\clearfield{$clearbib$}$endfor$%
 }
+% Make it hard for biblatex to break a line between G. and V. in G. V.
+\setcounter{highnamepenalty}{2000}
+\renewrobustcmd*{\bibinitdelim}{\addnbthinspace}
 $endif$
 $endif$
 
@@ -190,13 +194,86 @@ $endif$
 \providecommand{\tightlist}{%
   \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
 
+% Chicago ellipses. The lips package conflicts with many modern LaTeX packages
+% but provides the only good implementation of this I could find. I
+% simply copy over the code here, condensing it slightly. The original
+% lips package is copyright 1995-2001 Matt Swift <swift@alum.mit.edu> and
+% distributed under the LaTeX Project Public License 1.2.
+$if(chicago-ellipses)$
+\makeatletter
+\newcommand*\Lips {}
+\let\Lips\relax
+\DeclareRobustCommand\Lips {%
+  \ifvmode \def\sc@t@a {%
+      \leavevmode
+      .\nobreak\ .\nobreak\ .\nobreak\ %
+    }%
+  \else
+    \let\sc@t@a\lp@lips@hmode
+  \fi
+  \sc@t@a
+}
+\newcommand\lp@lips@hmode {%
+  \unskip
+  \@ifnextchar . {%
+      .\penalty9999\ .\nobreak\ .\nobreak\ .\ %
+      \GobbleIgnoreSpaces
+    }{% ELSE
+    \penalty9999\ .\nobreak\ .\nobreak\ .%
+    \futurelet\sc@t@a\lp@lips@check@punct
+  }%
+}
+\newcommand\GobbleIgnoreSpaces [1] {%
+  \ignorespaces
+}
+\newcommand*\lp@bang {}
+\newcommand*\lp@rparen {}
+\newcommand*\lp@comma {}
+\newcommand*\lp@slash {}
+\newcommand*\lp@colon {}
+\newcommand*\lp@semic {}
+\newcommand*\lp@q {}
+\newcommand*\lp@rbrack {}
+\newcommand*\lp@rquote {}
+\newcommand*\lp@tilde {}
 
-% Make it hard for biblatex to break a line between G. and V. in G. V.
-\setcounter{highnamepenalty}{2000}
-\renewrobustcmd*{\bibinitdelim}{\addnbthinspace}
-
-% Chicago ellipses
-\usepackage[chicago]{ellipsis}
+\let\lp@bang=!
+\let\lp@rparen=)
+\let\lp@comma=,
+\let\lp@slash=/
+\let\lp@colon=:
+\let\lp@semic=;
+\let\lp@q=?
+\let\lp@rbrack=]
+\let\lp@rquote='
+\let\lp@tilde=~
+\newcommand \LPNobreakList {%
+  \lp@comma \lp@colon  \lp@semic
+  \lp@q \lp@bang 
+  \lp@rparen \lp@rquote \lp@rbrack \egroup
+  \lp@slash
+}
+\newcommand\lp@lips@check@punct {%
+  \ifx\sc@t@a\lp@tilde
+  \else
+    \@tempswatrue
+    \let\@fortmp\PunctList
+    \expandafter\@tforloop\LPNobreakList\@nil\@nil\@@\reserved@a {%
+      \ifx\sc@t@a\reserved@a
+	\@tempswafalse
+	\@break@tfor
+      \fi
+     }%
+    \if@tempswa
+      \ %
+    \else
+      \nobreak\ %
+    \fi
+  \fi
+}
+\makeatother
+\let\ldots=\Lips
+$endif$
 
 % Chicago footnotes
 \footmarkstyle{#1.~}
