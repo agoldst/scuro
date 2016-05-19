@@ -202,12 +202,6 @@ $endif$
 \footmarkstyle{#1.~}
 \setlength{\footparindent}{1em}
 
-% \symbolfootnote from Kieran Healy's memoir-article-styles.sty
-% https://github.com/kjhealy/latex-custom-kjh/
-% \symbolfootnote[0]{...} gives an acknowledgment note (no ref, no marker)
-\long\def\symbolfootnote[#1]#2{\begingroup%
-\def\thefootnote{\fnsymbol{footnote}}\footnote[#1]{#2}\endgroup}
-
 % Section styling
 \setsecheadstyle{\scshape\raggedright\MakeLowercase}
 $if(numbersections)$
@@ -251,23 +245,10 @@ $if(headers)$
 \fi
 $endif$
 
-% titling
-
-\renewcommand{\maketitlehooka}{\begin{flushleft}}
-\pretitle{\MakeUppercase}
-\posttitle{\\[\baselineskip]}
-\preauthor{}
-\postauthor{\\}
-\predate{}
-\postdate{}
-\renewcommand{\maketitlehookd}{\end{flushleft}}
+% titling: we won't use maketitle, though
 
 $if(title)$
 \title{$title$$if(thanks)$\thanks{$thanks$}$endif$}
-$endif$
-$if(subtitle)$
-\providecommand{\subtitle}[1]{}
-\subtitle{$subtitle$}
 $endif$
 $if(author)$
 \author{$for(author)$$author$$sep$ \and $endfor$}
@@ -301,8 +282,23 @@ $endfor$
 
 \begin{document}
 $if(title)$
-\maketitle
+\begin{flushleft}
+{\MakeUppercase \thetitle} $if(subtitle)$ \\ $subtitle$$endif$
+$if(anon)$$else$$if(author)$\\ \theauthor$endif$$endif$
+$if(date)$\\ \thedate$endif$
+\end{flushleft}
 $endif$
+$if(thanks)$$if(anon)$$else$
+\begingroup
+\setlength{\footmarkwidth}{0em}
+\setlength{\footmarksep}{0em}
+\setlength{\footparindent}{1em}
+\footmarkstyle{#1}
+\def\thefootnote{\fnsymbol{footnote}}
+\footnote[0]{$thanks$}
+\endgroup
+$endif$$endif$
+
 $if(abstract)$
 \begin{abstract}
 $abstract$
@@ -329,7 +325,8 @@ $endif$
 $if(lof)$
 \listoffigures
 $endif$
-$body$
+
+\noindent $body$
 
 $if(natbib)$
 $if(bibliography)$
