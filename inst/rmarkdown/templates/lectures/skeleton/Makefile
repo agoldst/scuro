@@ -14,24 +14,20 @@ scripts_md := $(patsubst scripts/%.Rmd,scripts_md/%.md,$(scripts_rmd))
 rmds := $(notes_rmd) $(scripts_rmd)
 mds := $(notes_md) $(scripts_md)
 
-slides_notes_tex := $(patsubst %.Rmd,%.tex,$(addprefix slides/,$(notdir $(notes_rmd))))
-lectures_notes_tex := $(patsubst %.Rmd,%.tex,$(addprefix lectures/,$(notdir $(notes_rmd))))
-handouts_notes_tex := $(patsubst %.Rmd,%.tex,$(addprefix handouts/,$(notdir $(notes_rmd))))
-slides_scripts_tex := $(patsubst %.Rmd,%.tex,$(addprefix slides/,$(notdir $(scripts_rmd))))
-lectures_scripts_tex := $(patsubst %.Rmd,%.tex,$(addprefix lectures/,$(notdir $(scripts_rmd))))
-handouts_scripts_tex := $(patsubst %.Rmd,%.tex,$(addprefix handouts/,$(notdir $(scripts_rmd))))
+slides_notes_pdf := $(patsubst %.Rmd,%.pdf,$(addprefix slides/,$(notdir $(notes_rmd))))
+lectures_notes_pdf := $(patsubst %.Rmd,%.pdf,$(addprefix lectures/,$(notdir $(notes_rmd))))
+handouts_notes_pdf := $(patsubst %.Rmd,%.pdf,$(addprefix handouts/,$(notdir $(notes_rmd))))
+slides_scripts_pdf := $(patsubst %.Rmd,%.pdf,$(addprefix slides/,$(notdir $(scripts_rmd))))
+lectures_scripts_pdf := $(patsubst %.Rmd,%.pdf,$(addprefix lectures/,$(notdir $(scripts_rmd))))
+handouts_scripts_pdf := $(patsubst %.Rmd,%.pdf,$(addprefix handouts/,$(notdir $(scripts_rmd))))
 
-notes_tex := $(slides_notes_tex) $(lectures_notes_tex) $(handouts_notes_tex)
-scripts_tex := $(slides_scripts_tex) $(lectures_scripts_tex) $(handouts_scripts_tex)
-
-texs := $(notes_tex) $(scripts_tex)
-
-notes_pdf := $(patsubst %.tex,%.pdf, $(notes_tex))
-scripts_pdf := $(patsubst %.tex,%.pdf, $(scripts_tex))
+notes_pdf := $(slides_notes_pdf) $(lectures_notes_pdf) $(handouts_notes_pdf)
+scripts_pdf := $(slides_scripts_pdf) $(lectures_scripts_pdf) $(handouts_scripts_pdf)
 
 pdfs := $(notes_pdf) $(scripts_pdf)
+texs := $(patsubst %.pdf,%.tex,$(pdfs))
 
-.PHONY: $(mds) $(texs) $(pdfs) all clean reallyclean
+.PHONY: $(mds) $(pdfs) all clean reallyclean
 
 $(notes_md): notes_md/%.md: notes/%.Rmd
 	mkdir -p $(dir $@)
@@ -41,28 +37,29 @@ $(scripts_md): scripts_md/%.md: scripts/%.Rmd
 	mkdir -p $(dir $@)
 	R -e 'rmarkdown::render("$<", output_dir="$(dir $@)",  output_file="$(notdir $@)")'
 
-$(slides_notes_tex): slides/%.tex: notes_md/%.md
-	R -e 'scuro::make("$@")'
-$(lectures_notes_tex): lectures/%.tex: notes_md/%.md
-	R -e 'scuro::make("$@")'
-$(handouts_notes_tex): handouts/%.tex: notes_md/%.md
-	R -e 'scuro::make("$@")'
-$(slides_scripts_tex): slides/%.tex: scripts_md/%.md
-	R -e 'scuro::make("$@")'
-$(lectures_scripts_tex): lectures/%.tex: scripts_md/%.md
-	R -e 'scuro::make("$@")'
-$(handouts_scripts_tex): handouts/%.tex: scripts_md/%.md
-	R -e 'scuro::make("$@")'
-$(pdfs): %.pdf: %.tex
-	R -e 'scuro::make("$@")'
+$(slides_notes_pdf): slides/%.pdf: notes_md/%.md
+	R -e 'scuro::render_pdf("$<", "slides")'
+$(lectures_notes_pdf): lectures/%.pdf: notes_md/%.md
+	R -e 'scuro::render_pdf("$<", "lecture")'
+$(handouts_notes_pdf): handouts/%.pdf: notes_md/%.md
+	R -e 'scuro::render_pdf("$<", "handout")'
+$(slides_scripts_pdf): slides/%.pdf: scripts_md/%.md
+	R -e 'scuro::render_pdf("$<", "slides")'
+$(lectures_scripts_pdf): lectures/%.pdf: scripts_md/%.md
+	R -e 'scuro::render_pdf("$<", "lecture")'
+$(handouts_scripts_pdf): handouts/%.pdf: scripts_md/%.md
+	R -e 'scuro::render_pdf("$<", "handout")'
 
 all: $(pdfs)
 
 clean:
-	R -e 'scuro::make("$@")'
+	rm -rf lectures/tmp slides/tmp handouts/tmp
+	rm -f $(texs)
 
+# clean up everything including pdfs
 reallyclean: clean
-	R -e 'scuro::make("$@")'
+	rm -f $(pdfs)
+	-rmdir lectures slides handouts
 	rm -rf $(mds)
 	rm -rf $(addsuffix _cache,$(basename $(notes_rmd)))
 	rm -rf $(addsuffix _cache,$(basename $(scripts_rmd)))
