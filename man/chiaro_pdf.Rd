@@ -6,7 +6,8 @@
 \usage{
 chiaro_pdf(fig_width = 4, fig_height = 2, fig_crop = TRUE,
   fig_caption = TRUE, dev = "tikz", highlight = "zenburn",
-  keep_tex = TRUE, latex_engine = "xelatex", plot_font = "mainfont")
+  keep_tex = TRUE, latex_engine = "xelatex", plot_font = "mainfont",
+  plot_font_options = NULL)
 }
 \arguments{
 \item{fig_width}{Natural figure width in inches. This is rescaled according
@@ -25,6 +26,8 @@ the natural width or the textwidth, whichever is smaller).}
 \item{plot_font}{If both XeLaTeX and TikZ are used, the package will set the
 font in graphics. Any system font name can be given. The default value
 \code{mainfont} selects the document main font.}
+
+\item{plot_font_options}{\code{fontspec} options for the \code{plot_font}.}
 }
 \value{
 An R Markdown format suitable for rendering.
@@ -34,7 +37,7 @@ This format is meant to supply only the TikZ-wrangling features of the
 package and to set up reasonable further defaults for an article rather than
 a presentation. For slides that use scuro's font and figure-drawing setup
 but not its color scheme, use \code{\link{scuro_md}} but with format option
-\code{scuro=FALSE}. The built-in \code{\link[rmarkdown]{render}} is flexible 
+\code{scuro=FALSE}. The built-in \code{\link[rmarkdown]{render}} is flexible
 enough to handle all the processing from R markdown to PDF,
 including citation processing where needed.
 }

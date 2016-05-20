@@ -5,8 +5,8 @@
 \title{Intermediate markdown format}
 \usage{
 scuro_md(fig_width = 4.5, fig_height = 2.75, fig_crop = TRUE,
-  latex_engine = "xelatex", dev = "tikz", plot_font = "sansfont",
-  plot_font_options = NULL, scuro = TRUE)
+  highlight = "zenburn", latex_engine = "xelatex", dev = "tikz",
+  plot_font = "sansfont", plot_font_options = NULL, scuro = TRUE)
 }
 \arguments{
 \item{fig_width, fig_height}{default figure dimensions (inches). Note that
@@ -17,6 +17,9 @@ figure on them (and possibly a title and a caption).}
 \item{fig_crop, latex_engine}{same as for the built-in
 \code{\link[rmarkdown]{beamer_presentation}}, but XeLaTeX is the default
 engine}
+
+\item{highlight}{syntax highlighting scheme. Note that this option is
+currently only supported if specified in the R markdown source.}
 
 \item{dev}{graphics device. \code{"tikz"} for TikZ graphics is the default,
 since one of the main points of this package is to transcend bad beamer

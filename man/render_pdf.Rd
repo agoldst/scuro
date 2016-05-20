@@ -4,23 +4,19 @@
 \alias{render_pdf}
 \title{Convert scuro markdown to PDF slides, notes, scripts, and handouts}
 \usage{
-render_pdf(input, type = c("slides", "handout", "lecture"))
+render_pdf(input, type = c("slides", "handouts", "lectures", "notes"))
 }
 \arguments{
-\item{target}{Which PDFs to make: for each file \code{notes/X.md} or
-\code{scripts/X.md}, the options are \code{slides/X.pdf} (slides),
-\code{lectures/X.pdf} (speaker notes), \code{handouts/X.pdf} (slide handout
-for the audience). The default, \code{all}, generates all three for each
-markdown file.}
+\item{input}{source markdown (\emph{not} R markdown) file, created by
+\code{\link[rmarkdown]{render}}ing to \code{{\link{scuro_md}}}.}
+
+\item{type}{type of PDF to generate (any of \code{slides},
+\code{handout[s]}, or \code{lecture[s]} (synonym: \code{notes})). Can be a
+vector. Output goes to a correspondingly named subdirectory.}
 }
 \description{
 Knitted markdown can be converted into the multiple forms that support a
 lecture with this function. It is just a wrapper for an invocation of
 \code{make}.
-}
-\details{
-The possible targets are defined by the Makefile included in this package
-(\emph{not} the Makefile in the \code{lectures} template), which can be
-found at \code{system.file("elsmd/Makefile", package="scuro")}.
 }
 

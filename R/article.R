@@ -5,7 +5,7 @@
 #' package and to set up reasonable further defaults for an article rather than
 #' a presentation. For slides that use scuro's font and figure-drawing setup
 #' but not its color scheme, use \code{\link{scuro_md}} but with format option
-#' \code{scuro=FALSE}. The built-in \code{\link[rmarkdown]{render}} is flexible 
+#' \code{scuro=FALSE}. The built-in \code{\link[rmarkdown]{render}} is flexible
 #' enough to handle all the processing from R markdown to PDF,
 #' including citation processing where needed.
 #'
@@ -32,6 +32,8 @@
 #' font in graphics. Any system font name can be given. The default value
 #' \code{mainfont} selects the document main font.
 #'
+#' @param plot_font_options \code{fontspec} options for the \code{plot_font}.
+#'
 #' @return An R Markdown format suitable for rendering.
 #'
 #' @export
@@ -44,11 +46,12 @@ chiaro_pdf <- function (
         highlight="zenburn",
         keep_tex=TRUE,
         latex_engine="xelatex",
-        plot_font="mainfont") {
+        plot_font="mainfont",
+        plot_font_options=NULL) {
 
     tmpl <- system.file(file.path("memarticle", "memoir-article.latex"),
         package="scuro")
-    
+
     meta <- extract_metadata(input)
     if (!is.null(meta$biblatex) && meta$biblatex)
         cit_pkg <- "biblatex"
@@ -69,7 +72,8 @@ chiaro_pdf <- function (
         latex_engine=latex_engine,
         citation_package=cit_pkg
     )
-    result$knitr <- scuro_knitr(result$knitr)
+    result$knitr <- scuro_knitr(result$knitr,
+        dev, latex_engine, plot_font, plot_font_options)
 
     result$knitr$opts_chunk$fig.path <- "figure/"
     result$knitr$opts_chunk$fig.align <- "center"
