@@ -327,10 +327,9 @@ $endif$
 $if(title)$
 \title{$title$$if(thanks)$\thanks{$thanks$}$endif$}
 $endif$
+$if(author)$
 $if(anon)$
 \author{}
-$else$
-$if(author)$
 $else$
 \author{$for(author)$$author$$sep$ \and $endfor$}
 $endif$
