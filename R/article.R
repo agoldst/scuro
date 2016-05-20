@@ -5,16 +5,19 @@
 #' package and to set up reasonable further defaults for an article rather than
 #' a presentation. For slides that use scuro's font and figure-drawing setup
 #' but not its color scheme, use \code{\link{scuro_md}} but with format option
-#' \code{scuro=FALSE}.
+#' \code{scuro=FALSE}. The built-in \code{\link[rmarkdown]{render}} is flexible 
+#' enough to handle all the processing from R markdown to PDF,
+#' including citation processing where needed.
 #'
 #' Among defaults selected here, of particular note are centering alignment for
 #' figures, a black-and-white ggplot theme, and stop-on-error. Errors,
 #' warnings, and messages will all go to the console, not into the final
-#' document.
+#' document. The intermediate LaTeX file will also be kept as this is often
+#' necessary to diagnose typesetting errors.
 #'
 #' @param fig_width Natural figure width in inches. This is rescaled according
-#' to the value of chunk option `out.width` (configured to use the natural
-#' width or the textwidth, whichever is smaller).
+#' to the value of chunk option \code{out.width} (by default, configured to use
+#' the natural width or the textwidth, whichever is smaller).
 #'
 #' @param fig_height Natural figure height in inches.
 #' \code{fig_width/fig_height} is the aspect ratio of the graphic.
@@ -32,32 +35,49 @@
 #' @return An R Markdown format suitable for rendering.
 #'
 #' @export
-chiaro_md <- function (
+chiaro_pdf <- function (
         fig_width=4,
         fig_height=2,
         fig_crop=TRUE,
-        latex_engine="xelatex",
+        fig_caption=TRUE,
         dev="tikz",
+        highlight="zenburn",
+        keep_tex=TRUE,
+        latex_engine="xelatex",
         plot_font="mainfont") {
 
-    result <- scuro_md(fig_width, fig_height, fig_crop, latex_engine, dev,
-        plot_font, scuro=FALSE)
+    tmpl <- system.file(file.path("memarticle", "memoir-article.latex"),
+        package="scuro")
+    
+    meta <- extract_metadata(input)
+    if (!is.null(meta$biblatex) && meta$biblatex)
+        cit_pkg <- "biblatex"
+    else
+        cit_pkg <- "none"
+
+
+    result <- pdf_document(
+        toc=FALSE, toc_depth=2, number_sections=FALSE,
+        fig_width=fig_width,
+        fig_height=fig_height,
+        fig_crop=fig_crop,
+        fig_caption=fig_caption,
+        dev=dev,
+        highlight=highlight,
+        template=tmpl,
+        keep_tex=keep_tex,
+        latex_engine=latex_engine,
+        citation_package=cit_pkg
+    )
+    result$knitr <- scuro_knitr(result$knitr)
 
     result$knitr$opts_chunk$fig.path <- "figure/"
     result$knitr$opts_chunk$fig.align <- "center"
     # maxwidth macro defined in memoir-article.latex template
     result$knitr$opts_chunk$out.width <- "\\maxwidth"
 
-    result$knitr$opts_chunk$dark_theme <- FALSE
     result$knitr$opts_chunk$theme_bw <- TRUE
     result$knitr$knit_hooks$theme_bw <- set_theme_bw
-
-    # don't need the textpos plot hook, but need TeX figures
-    result$knitr$knit_hooks$plot <- knitr::hook_plot_tex
-
-    result$pandoc$args <- result$pandoc$args[
-        grep("\\.yaml$", result$pandoc$args, invert=TRUE)
-    ]
 
     result$knitr$opts_chunk$echo <- FALSE
     result$knitr$opts_chunk$error <- FALSE
@@ -71,16 +91,3 @@ chiaro_md <- function (
     result
 }
 
-#' @export
-make_article <- function (target="all") { 
-    makefile <- system.file(
-        file.path("memarticle", "Makefile"), package="scuro")
-    tmpl <- system.file(file.path("memarticle", "memoir-article.latex"),
-        package="scuro")
-    system2("make", c(
-        paste0("PANDOC_TMPL=", tmpl), "out_dir=.",
-        "-f", makefile,
-        target
-    ))
-
-}

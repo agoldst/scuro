@@ -66,15 +66,33 @@ scuro_md <- function (
         fig_width=fig_width,
         fig_height=fig_height,
         dev=dev,
-        pandoc_args=c(yaml_defaults, "--atx-headers")
-    )
-
-    # this knit_hooks fiddling code is closely modeled on
-    # https://github.com/rstudio/rmarkdown/blob/master/R/tufte_handout.R
+        pandoc_args=c(yaml_defaults, "--atx-headers",
+            )
+    ) 
 
     knitr_options <- rmarkdown::knitr_options_pdf(
         fig_width, fig_height, fig_crop, dev
-    )
+    ) 
+
+    result$knitr <- scuro_knitr(knitr_options)
+    # put figures one level up, where they can be found by latex later on
+    # overrides rmarkdown's default choice of "<filename>_files"
+    knitr_options$opts_chunk$fig.path <- "../figure/"
+
+    # set textpos plotting hook
+    result$knitr$knit_hooks$plot <- plot_hook_textpos
+
+    # custom package hook option: use dark_plot_theme everywhere
+    knitr_options$opts_chunk$dark_theme <- scuro
+    result$knitr$knit_hooks$dark_theme <- set_dark_theme
+
+
+    result
+}
+
+scuro_knitr <- function (knitr_options) {
+    # this knit_hooks fiddling code is closely modeled on
+    # https://github.com/rstudio/rmarkdown/blob/master/R/tufte_handout.R
     if (is.null(knitr_options$opts_knit)) {
         knitr_options$opts_knit <- list()
     }
@@ -89,12 +107,6 @@ scuro_md <- function (
     knitr_options$opts_chunk$size <- "footnotesize"
     knitr_options$opts_chunk$dev.args <- list(pointsize=9)
 
-    # put figures one level up, where they can be found by latex later on
-    # overrides rmarkdown's default choice of "<filename>_files"
-    knitr_options$opts_chunk$fig.path <- "../figure/"
-
-    # custom package hook option: use dark_plot_theme everywhere
-    knitr_options$opts_chunk$dark_theme <- scuro
     if (dev == "tikz" && latex_engine == "xelatex") {
         knitr_options$opts_chunk$tikz_xelatex <- TRUE
         # custom option: plot_font (processed by tikz_setup_hook)
@@ -104,16 +116,12 @@ scuro_md <- function (
 
 
     # set hooks
-    knitr_options$knit_hooks$plot <- plot_hook_textpos
     knitr_options$knit_hooks$output <- output_hook_routput
-    knitr_options$knit_hooks$dark_theme <- set_dark_theme
     knitr_options$knit_hooks$tikz_xelatex <- tikz_setup_hook
 
-    result$knitr <- knitr_options
-
-    result
+    knitr_options
 }
-
+    
 
 #' Convert scuro markdown to PDF slides, notes, scripts, and handouts
 #'
@@ -132,7 +140,23 @@ scuro_md <- function (
 #' markdown file.
 #'
 #' @export
-make <- function (target="all") {
+render_pdf <- function (input, type=c("slides", "handout", "lecture")) {
+
+    type <- match.arg(type)
+    if (type != "slides") {
+        type <- paste0(type, "s")
+    }
+
+    meta <- extract_metadata(input)
+    if (!is.null(meta) && is.list(meta$output)
+            && is.list(meta$output[["scuro::md"]])) {
+        hlt <- meta$output[["scuro::md"]]$highlight
+        if (is.character(hlt) && hlt != "default") {
+            flgs <- paste0("--highlight-style=", hlt)
+        }
+    }
+
+    target <- file.path(type, sub("\\.md$", ".pdf", basename(input)))
 
     makefile <- system.file(file.path("elsmd", "Makefile"), package="scuro")
     overlay_filter <- system.file(file.path("elsmd", "overlay_filter"),
@@ -145,13 +169,37 @@ make <- function (target="all") {
         paste0("OVERLAY_FILTER=", overlay_filter),
         paste0("SLIDES_TMPL=", slides_template),
         paste0("SCRIPT_TMPL=", script_template), 
+        paste0("PANDOC_OPTS=", flgs),
         "NOTES=notes_md", "SCRIPTS=scripts_md",
         "SCURO=\"\"",   # but rendering scuro_md ensures scuro: true in YAML
         "-f", makefile, # UNLESS scuro: false is explicit in the source Rmd
         target
     ))
-
 }
+
+extract_metadata <- function (file) {
+    ll <- readLines(file)
+    # lifted from rmarkdown:::partition_yaml_front_matter
+    delimiters <- grep("^(---|\\.\\.\\.)\\s*$", ll)
+    valid <- FALSE
+    if (length(delimiters) >= 2 && (delimiters[2] - delimiters[1] > 
+        1) && grepl("^---\\s*$", ll[delimiters[1]])) {
+        if (delimiters[1] == 1) 
+            valid <- TRUE
+        else
+            valid <- all(!grepl("\\S", input_lines[1:delimiters[1] - 1]))
+    }
+
+    if (valid) {
+        yaml::yaml.load(
+            input_lines[(delimiters[1] + 1):(delimiters[2] - 1)]
+        )
+    } else
+        NULL
+}
+
+
+    
 
 
 # TODO invoke this in plot hook to generate file for handout
