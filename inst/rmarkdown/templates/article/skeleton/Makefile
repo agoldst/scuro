@@ -11,7 +11,7 @@ pdfs := $(patsubst %.tex,%.pdf,$(texs))
 .PHONY: $(mds) $(texs) $(pdfs) all clean reallyclean
 
 $(mds): %.md: %.Rmd
-	R -e 'rmarkdown::render("$<")
+	R -e 'rmarkdown::render("$<")'
 
 $(texs): %.tex: %.md
 	R -e 'scuro::make_article("$@")'
@@ -22,14 +22,15 @@ $(pdfs): %.pdf: %.tex
 all: $(pdfs)
 
 clean:
-	R -e 'scuro::make_article("$@")'
+	rm -rf tmp
+	rm -f $(texs)
 
 reallyclean: clean
-	R -e 'scuro::make_article("$@")'
 	rm -rf $(mds)
 	rm -rf $(addsuffix _cache,$(basename $(rmds)))
 	rm -f $(addsuffix -tikzDictionary,$(basename $(rmds)))
 	rm -rf figure
+	rm -f $(pdfs)
 
 .DEFAULT_GOAL := all
 
