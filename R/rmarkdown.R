@@ -87,7 +87,7 @@ scuro_md <- function (
         if (!is.list(meta$output)) {
             meta$output <- list()
         }
-        if (!is.list(meta$output[["scuro::scuro_md"]])) { 
+        if (!is.list(meta$output[["scuro::scuro_md"]])) {
             meta$output[["scuro::scuro_md"]] <- list()
         }
         meta$output[["scuro::scuro_md"]]$highlight <- highlight
@@ -142,6 +142,15 @@ scuro_knitr <- function (knitr_options,
     knitr_options$opts_chunk$size <- "footnotesize"
     knitr_options$opts_chunk$dev.args <- list(pointsize=9)
 
+    result$knitr$opts_chunk$echo <- FALSE
+    result$knitr$opts_chunk$error <- FALSE
+    result$knitr$opts_chunk$warning <- FALSE
+    result$knitr$opts_chunk$message <- FALSE
+    result$knitr$opts_chunk$prompt <- FALSE
+    result$knitr$opts_chunk$comment <- NA
+    result$knitr$opts_chunk$autodep <- TRUE
+    result$knitr$opts_chunk$cache <- TRUE
+
     if (dev == "tikz" && latex_engine == "xelatex") {
         knitr_options$opts_chunk$tikz_xelatex <- TRUE
         # custom option: plot_font (processed by tikz_setup_hook)
@@ -187,7 +196,7 @@ render_pdf <- function (input,
         hltp <- meta$output[["scuro::scuro_md"]]$highlight_paper
         if (!is.character(hlt) || hlt == "default") {
             hlt <- "kate"
-        } 
+        }
         if (!is.character(hltp)) {
             hltp <- hlt
         } else if (hltp == "default") {
@@ -240,7 +249,7 @@ extract_metadata <- function (file) {
         meta <- yaml::yaml.load(
             paste(ll[(delimiters[1] + 1):(delimiters[2] - 1)], collapse="\n")
         )
-        if (delimiters[2] < length(ll)) 
+        if (delimiters[2] < length(ll))
             body <- ll[-(1:delimiters[2])]
         list(metadata=meta, body=body)
     }

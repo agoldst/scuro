@@ -43,8 +43,9 @@ chiaro_pdf <- function (
         fig_crop=TRUE,
         fig_caption=TRUE,
         dev="tikz",
-        highlight="zenburn",
+        highlight="default",
         keep_tex=TRUE,
+        citation_package=c("none", "biblatex"),
         latex_engine="xelatex",
         plot_font="mainfont",
         plot_font_options=NULL) {
@@ -52,14 +53,9 @@ chiaro_pdf <- function (
     tmpl <- system.file(file.path("memarticle", "memoir-article.latex"),
         package="scuro")
 
-    meta <- extract_metadata(input)$metadata
-    if (!is.null(meta) && !is.null(meta$biblatex) && meta$biblatex)
-        cit_pkg <- "biblatex"
-    else
-        cit_pkg <- "none"
+    citation_package <- match.arg(citation_package)
 
-
-    result <- pdf_document(
+    result <- rmarkdown::pdf_document(
         toc=FALSE, toc_depth=2, number_sections=FALSE,
         fig_width=fig_width,
         fig_height=fig_height,
@@ -70,8 +66,10 @@ chiaro_pdf <- function (
         template=tmpl,
         keep_tex=keep_tex,
         latex_engine=latex_engine,
-        citation_package=cit_pkg
+        citation_package=citation_package,
+        pandoc_args=c("-V", "highlighting_macros")
     )
+
     result$knitr <- scuro_knitr(result$knitr,
         dev, latex_engine, plot_font, plot_font_options)
 
@@ -83,14 +81,6 @@ chiaro_pdf <- function (
     result$knitr$opts_chunk$theme_bw <- TRUE
     result$knitr$knit_hooks$theme_bw <- set_theme_bw
 
-    result$knitr$opts_chunk$echo <- FALSE
-    result$knitr$opts_chunk$error <- FALSE
-    result$knitr$opts_chunk$warning <- FALSE
-    result$knitr$opts_chunk$message <- FALSE
-    result$knitr$opts_chunk$prompt <- FALSE
-    result$knitr$opts_chunk$comment <- NA
-    result$knitr$opts_chunk$autodep <- TRUE
-    result$knitr$opts_chunk$cache <- TRUE
 
     result
 }

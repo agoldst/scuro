@@ -10,26 +10,9 @@ output:
 ---
 
 ```{r setup, include=F, cache=F}
-library(knitr)
-# attempt to set a reasonable code output textwidth
-options(width=44)
-
-# recommended chunk options
-opts_chunk$set(
-    comment=NA, # no comment chars decorating code output
-    collapse=T, # multiple statements and output collapsed together
-    message=F,  # quit your chatter, R
-    warning=F,
-    error=F,    # stop on error: but this can get annoying
-    echo=F,     # hide chunk code by default
-    cache=T,
-    autodep=T
-)
-
 # load your favorite libraries
+library(knitr)  # for kable (see below)
 library(ggplot2)
-
-dep_auto()
 ```
 
 # for written-out talks...
