@@ -1,10 +1,16 @@
 ---
-title: Essay
-author: Me
-date: '`r Sys.Date()`'
+title: Datalogical Investigations
+author: Typographer Q. Statisticalanalysis
+date: '`r format(Sys.Date(), "%B %e, %Y")`'
 mainfont: Hoefler Text
 mainfontoptions: [Numbers=OldStyle]
-output: scuro::chiaro_md
+biblatex: true
+biblatex-chicago: true
+biblatexoptions: [notes]
+bibliography: sources.bib
+output:
+  scuro::chiaro_pdf:
+    highlight: zenburn
 ---
 
 ```{r setup, cache=F}
@@ -15,11 +21,14 @@ knitr::dep_auto()
 
 # A very good typographical idea
 
-Now we are computing with cryptonite, my friends.
+The `chiaro_md` format is meant for articles to be printed (or viewed as PDFs) in the ordinary black-text-on-white-paper style. The main thing it adds to an ordinary R Markdown-to-PDF setup is Ti*k*Z figure wrangling: by default the document's main font will be used in figures as well (change this with a `plot_font` option under `output`). It also sets a black-and-white ggplot theme as the default (disable this with chunk option `theme_bw`). The default figure dimensions are 4 in by 2 in (adjustable via chunk options or as options to the output format called `fig_width` and `fig_height`). Figure settings almost always require some tweaking, with special attention to the interaction between the `fig.width` and `fig.height` parameters and the `out.width` parameter: the former two set the size of the image file (and hence its aspect ratio) whereas the latter gives the width (as a TeX dimension) in the final document. If you do not change `out.width`, it will be set to the actual width of the image file or the `\textwidth`, whichever is smaller. The type size *before* any scaling will be `\footnotesize` (set via chunk option `size`). Figure placement, captioning, and labeling are by the usual `knitr` and LaTeX mechanisms. See fig.~\ref{fig:cars}.
 
-```{r cars, fig.cap="Something about cars"}
+Finally, the LaTeX is based on a custom template which uses the `memoir` package: the template included in my [memarticle](http://github.com/agoldst/memarticle) setup. A copy of this is included in this package. The accompanying Makefile here lets you simply use `make` to turn this file into a PDF. If you use `biblatex` (or `biblatex-chicago`) for references, typesetting via `make` will ensure the correct number of LaTeX and `biber` processing runs. The required metadata keys are exemplified here (`biblatex`, `biblatex-chicago`, `biblatexoptions`, and `bibliography`). Set `biblatex: false` to disable this feature.\autocite[An example citation: ]{wilde:soul}
+
+```{r cars, fig.cap="Something about cars",fig.pos="b"}
 ggplot(mtcars) +
     geom_point(aes(wt, mpg, color=factor(gear))) +
-    facet_wrap(~ am)
+    labs(color="Gear")
 ```
 
+Code listings are also possible. Set the highlighting with a `highlight:` field in the document metadata (*not* an output-format parameter).

@@ -4,25 +4,17 @@
 # make reallyclean	clean up md -> Rmd intermediate files and PDFs too
 
 rmds := $(wildcard *.Rmd)
-mds := $(patsubst %.Rmd,%.md,$(rmds))
-texs := $(patsubst %.Rmd,%.tex,$(rmds))
-pdfs := $(patsubst %.tex,%.pdf,$(texs))
+pdfs := $(patsubst %.Rmd,%.pdf,$(rmds))
+texs := $(patsubst %.pdf,%.tex,$(pdfs))
 
-.PHONY: $(mds) $(texs) $(pdfs) all clean reallyclean
+.PHONY: $(pdfs) all clean reallyclean
 
-$(mds): %.md: %.Rmd
+$(pdfs): %.pdf: %.Rmd
 	R -e 'rmarkdown::render("$<")'
-
-$(texs): %.tex: %.md
-	R -e 'scuro::make_article("$@")'
-
-$(pdfs): %.pdf: %.tex
-	R -e 'scuro::make_article("$@")'
 
 all: $(pdfs)
 
 clean:
-	rm -rf tmp
 	rm -f $(texs)
 
 reallyclean: clean
