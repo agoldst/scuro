@@ -14,8 +14,13 @@
 #'   \code{\link[rmarkdown]{beamer_presentation}}, but XeLaTeX is the default
 #'   engine
 #'
-#' @param highlight syntax highlighting scheme. Note that this option is
-#' currently only supported if specified in the R markdown source.
+#' @param highlight syntax highlighting scheme to be used on slides. Note that
+#' this option is currently only supported if specified in the R markdown
+#' source.
+#'
+#' @param highlight_paper syntax highlighting scheme to be used on handouts and
+#' notes. Note that this option is currently only supported if specified in the
+#' R markdown source.
 #'
 #' @param dev graphics device. \code{"tikz"} for TikZ graphics is the default,
 #'   since one of the main points of this package is to transcend bad beamer
@@ -47,18 +52,12 @@ scuro_md <- function (
         fig_height=2.75,
         fig_crop=TRUE,
         highlight="zenburn",
+        highlight_paper="monochrome",
         latex_engine="xelatex",
         dev="tikz",
         plot_font="sansfont",
         plot_font_options=NULL,
         scuro=TRUE) {
-
-    # YAML defaults merged in by pandoc; can be overridden by source Rmd
-    if (scuro) {
-        yaml_defaults <- system.file("pandoc/default.yaml", package="scuro")
-    } else {
-        yaml_defaults <- system.file("pandoc/chiaro.yaml", package="scuro")
-    }
 
     result <- rmarkdown::md_document(
         # variant="markdown" and --standalone (always set by md_document)
@@ -70,8 +69,39 @@ scuro_md <- function (
         fig_width=fig_width,
         fig_height=fig_height,
         dev=dev,
-        pandoc_args=c(yaml_defaults, "--atx-headers")
+        pandoc_args="--atx-headers"
     )
+
+    result$post_processor <- function (
+            metadata, input_file, output_file, clean, verbose) {
+        partition <- extract_metadata(input_file)
+        meta <- partition$metadata
+        if (is.null(meta)) {
+            meta <- list()
+        }
+        if (scuro) {
+            # propagate scuro setting up to top-level metadata
+            meta$scuro <- TRUE
+        }
+        # record highlighting choices in output md file metadata
+        if (!is.list(meta$output)) {
+            meta$output <- list()
+        }
+        if (!is.list(meta$output[["scuro::scuro_md"]])) { 
+            meta$output[["scuro::scuro_md"]] <- list()
+        }
+        meta$output[["scuro::scuro_md"]]$highlight <- highlight
+        meta$output[["scuro::scuro_md"]]$highlight_paper <- highlight_paper
+        writeLines(c(
+                "---",
+                yaml::as.yaml(meta),
+                "...",
+                "",
+                partition$body
+            ),
+            output_file, useBytes=TRUE)
+        output_file
+    }
 
     knitr_options <- rmarkdown::knitr_options_pdf(
         fig_width, fig_height, fig_crop, dev
@@ -146,17 +176,29 @@ render_pdf <- function (input,
     type=c("slides", "handouts", "lectures", "notes")) {
 
     type <- match.arg(type, several.ok=TRUE)
-    type <- ifelse(type == "notes", "lecture", type)
+    type <- ifelse(type == "notes", "lectures", type)
+    type <- unique(type)
 
-    meta <- extract_metadata(input)
+    meta <- extract_metadata(input)$metadata
     pandoc_opts <- c()
     if (!is.null(meta) && is.list(meta$output)
             && is.list(meta$output[["scuro::scuro_md"]])) {
         hlt <- meta$output[["scuro::scuro_md"]]$highlight
-        if (is.character(hlt) && hlt != "default") {
-            pandoc_opts <- paste0(
-                'PANDOC_OPTIONS="--highlight-style=', hlt,'"')
+        hltp <- meta$output[["scuro::scuro_md"]]$highlight_paper
+        if (!is.character(hlt) || hlt == "default") {
+            hlt <- "kate"
+        } 
+        if (!is.character(hltp)) {
+            hltp <- hlt
+        } else if (hltp == "default") {
+            hltp <- "kate"
         }
+        hlts <- type
+        hlts[hlts == "slides"] <- hlt
+        hlts[hlts %in% c("handouts", "lectures")] <- hltp
+
+        pandoc_opts <- paste0(
+            'PANDOC_OPTIONS="--highlight-style=', hlts,'"')
     }
     target <- file.path(type, sub("\\.md$", ".pdf", basename(input)))
 
@@ -167,16 +209,18 @@ render_pdf <- function (input,
                                    package="scuro")
     script_template <- system.file(file.path("elsmd", "beamerarticle.latex"),
                                    package="scuro")
-    system2("make", c(
-        paste0("OVERLAY_FILTER=", overlay_filter),
-        paste0("SLIDES_TMPL=", slides_template),
-        paste0("SCRIPT_TMPL=", script_template),
-        pandoc_opts,
-        "NOTES=notes_md", "SCRIPTS=scripts_md",
-        "SCURO=\"\"",   # but rendering scuro_md ensures scuro: true in YAML
-        "-f", makefile, # UNLESS scuro: false is explicit in the source Rmd
-        target
-    ))
+    for (t in seq_along(target)) {
+        system2("make", c(
+            paste0("OVERLAY_FILTER=", overlay_filter),
+            paste0("SLIDES_TMPL=", slides_template),
+            paste0("SCRIPT_TMPL=", script_template),
+            pandoc_opts[t],
+            "NOTES=notes_md", "SCRIPTS=scripts_md",
+            "SCURO=\"\"",   # but rendering scuro_md ensures scuro: true in YAML
+            "-f", makefile, # UNLESS scuro: false is explicit in the source Rmd
+            target[t]
+        ))
+    }
 }
 
 extract_metadata <- function (file) {
@@ -193,11 +237,16 @@ extract_metadata <- function (file) {
     }
 
     if (valid) {
-        yaml::yaml.load(
+        meta <- yaml::yaml.load(
             paste(ll[(delimiters[1] + 1):(delimiters[2] - 1)], collapse="\n")
         )
-    } else
-        NULL
+        if (delimiters[2] < length(ll)) 
+            body <- ll[-(1:delimiters[2])]
+        list(metadata=meta, body=body)
+    }
+    else {
+        list(body=ll)
+    }
 }
 
 # TODO invoke this in plot hook to generate file for handout

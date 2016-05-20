@@ -52,8 +52,8 @@ chiaro_pdf <- function (
     tmpl <- system.file(file.path("memarticle", "memoir-article.latex"),
         package="scuro")
 
-    meta <- extract_metadata(input)
-    if (!is.null(meta$biblatex) && meta$biblatex)
+    meta <- extract_metadata(input)$metadata
+    if (!is.null(meta) && !is.null(meta$biblatex) && meta$biblatex)
         cit_pkg <- "biblatex"
     else
         cit_pkg <- "none"
