@@ -5,7 +5,8 @@
 \title{Intermediate markdown format}
 \usage{
 scuro_md(fig_width = 4.5, fig_height = 2.75, fig_crop = TRUE,
-  latex_engine = "xelatex", dev = "tikz", plot_font = "sansfont")
+  latex_engine = "xelatex", dev = "tikz", plot_font = "sansfont",
+  plot_font_options = NULL, scuro = TRUE)
 }
 \arguments{
 \item{fig_width, fig_height}{default figure dimensions (inches). Note that
@@ -26,6 +27,12 @@ graphics. If \code{"sansfont"} (the default) or \code{"mainfont"}, the value
 of the corresponding document metadata field is used. If unspecified, the
 sans font is used if that has been specified. Otherwise we fall back to the
 LaTeX default.}
+
+\item{plot_font_options}{given a \code{plot_font}, font options. if
+\code{plot_font} is \code{"sansfont"} or \code{"mainfont"}, the
+corresponding font options will be used by default.}
+
+\item{scuro}{whether to apply the scuro color scheme to slides themselves.}
 }
 \value{
 an R Markdown output format used by
