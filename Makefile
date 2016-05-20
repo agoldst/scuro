@@ -17,6 +17,9 @@ always_latexmk :=
 # faster, and there are some packages with which xelatex is incompatible.
 xelatex := true
 
+# list of markdown files that are not to be made into PDFs
+EXCLUDE := README.md
+
 ## ---- special external file ----
 
 # Normally this does not need to be changed:
@@ -49,7 +52,7 @@ LATEXMK := latexmk $(if $(xelatex),-xelatex,-pdflatex="pdflatex %O %S") \
 
 ## ---- build rules ----
 
-mds := $(wildcard $(md_dir)/*.md)
+mds := $(filter-out $(md_dir)/$(EXCLUDE),$(wildcard $(md_dir)/*.md))
 
 texs := $(patsubst $(md_dir)/%.md,$(out_dir)/%.tex,$(mds))
 pdfs := $(patsubst $(md_dir)/%.md,$(out_dir)/%.pdf,$(mds)) 
