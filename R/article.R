@@ -15,14 +15,15 @@ chiaro_md <- function (
     result <- scuro_md(fig_width, fig_height, fig_crop, latex_engine, dev,
         plot_font, scuro=FALSE)
 
+    result$knitr$opts_chunk$fig.path <- "figure/"
     result$knitr$opts_chunk$dark_theme <- FALSE
     result$knitr$opts_chunk$theme_bw <- TRUE
-    knitr_options$knit_hooks$theme_bw <- set_theme_bw
+    result$knitr$knit_hooks$theme_bw <- set_theme_bw
 
     result$knitr$knit_hooks$plot <- NULL # revert to default
 
     result$pandoc$args <- result$pandoc$args[
-        grepl("\\.yaml$", result$pandoc$args, invert=TRUE)
+        grep("\\.yaml$", result$pandoc$args, invert=TRUE)
     ]
 
     result$knitr$opts_chunk$echo <- FALSE
@@ -44,7 +45,7 @@ make_article <- function (target="all") {
     tmpl <- system.file(file.path("memoirarticle", "memoir-article.latex"),
         package="scuro")
     system2("make", c(
-        paste0("PANDOC_TMPL=", tmpl), "md_dir=md",
+        paste0("PANDOC_TMPL=", tmpl), "out_dir=.",
         "-f", makefile,
         target
     ))

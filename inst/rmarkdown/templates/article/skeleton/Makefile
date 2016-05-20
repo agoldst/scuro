@@ -1,16 +1,19 @@
+# Usage:
+# make [all]		create PDF(s) from Rmd(s)
+# make clean		clean up md -> PDF intermediate files, leaving PDFs
+# make reallyclean	clean up md -> Rmd intermediate files and PDFs too
 
 rmds := $(wildcard *.Rmd)
-mds := $(patsubst %.Rmd,md/%.md,$(rmds))
-texs := $(patsubst %.Rmd,out/%.tex,$(rmds))
+mds := $(patsubst %.Rmd,%.md,$(rmds))
+texs := $(patsubst %.Rmd,%.tex,$(rmds))
 pdfs := $(patsubst %.tex,%.pdf,$(texs))
 
 .PHONY: $(mds) $(texs) $(pdfs) all clean reallyclean
 
-$(mds): md/%.md: %.Rmd
-	mkdir -p $(dir $@)
-	R -e 'rmarkdown::render("$<", output_dir="$(dir $@)",  output_file="$(notdir $@)")'
+$(mds): %.md: %.Rmd
+	R -e 'rmarkdown::render("$<")
 
-$(texs): out/%.tex: md/%.md
+$(texs): %.tex: %.md
 	R -e 'scuro::make_article("$@")'
 
 $(pdfs): %.pdf: %.tex
@@ -27,7 +30,6 @@ reallyclean: clean
 	rm -rf $(addsuffix _cache,$(basename $(rmds)))
 	rm -f $(addsuffix -tikzDictionary,$(basename $(rmds)))
 	rm -rf figure
-	-rmdir md
 
 .DEFAULT_GOAL := all
 
