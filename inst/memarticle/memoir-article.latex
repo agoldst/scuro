@@ -1,0 +1,431 @@
+\documentclass[article,%
+$if(fontsize)$$fontsize$,$else$12pt,$endif$%
+$if(papersize)$$papersize$paper,$else$letterpaper,$endif$%
+$for(classoption)$$classoption$$sep$,$endfor$]{memoir}
+
+$if(fontfamily)$
+\usepackage[$for(fontfamilyoptions)$$fontfamilyoptions$$sep$,$endfor$]{$fontfamily$}
+$else$
+\usepackage{lmodern}
+$endif$
+$if(linestretch)$
+\usepackage{setspace}
+\setstretch{$linestretch$}
+$endif$
+\usepackage{amssymb,amsmath}
+\usepackage{ifxetex,ifluatex}
+\usepackage{fixltx2e} % provides \textsubscript
+\ifnum 0\ifxetex 1\fi\ifluatex 1\fi=0 % if pdftex
+  \usepackage[$if(fontenc)$$fontenc$$else$T1$endif$]{fontenc}
+  \usepackage[utf8]{inputenc}
+$if(euro)$
+  \usepackage{eurosym}
+$endif$
+\else % if luatex or xelatex
+  \ifxetex
+    \usepackage{mathspec}
+  \else
+    \usepackage{fontspec}
+  \fi
+  \defaultfontfeatures{Ligatures=TeX,Scale=MatchLowercase}
+$if(euro)$
+  \newcommand{\euro}{€}
+$endif$
+$if(mainfont)$
+    \setmainfont[$for(mainfontoptions)$$mainfontoptions$$sep$,$endfor$]{$mainfont$}
+$endif$
+$if(sansfont)$
+    \setsansfont[$for(sansfontoptions)$$sansfontoptions$$sep$,$endfor$]{$sansfont$}
+$endif$
+$if(monofont)$
+    \setmonofont[Mapping=tex-ansi$if(monofontoptions)$,$for(monofontoptions)$$monofontoptions$$sep$,$endfor$$endif$]{$monofont$}
+$endif$
+$if(mathfont)$
+    \setmathfont(Digits,Latin,Greek)[$for(mathfontoptions)$$mathfontoptions$$sep$,$endfor$]{$mathfont$}
+$endif$
+$if(CJKmainfont)$
+    \usepackage{xeCJK}
+    \setCJKmainfont[$for(CJKoptions)$$CJKoptions$$sep$,$endfor$]{$CJKmainfont$}
+$endif$
+\fi
+% use upquote if available, for straight quotes in verbatim environments
+\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
+% use microtype if available
+\IfFileExists{microtype.sty}{%
+\usepackage{microtype}
+\UseMicrotypeSet[protrusion]{basicmath} % disable protrusion for tt fonts
+}{}
+$if(geometry)$
+\usepackage[$for(geometry)$$geometry$$sep$,$endfor$]{geometry}
+% Use default memoir page layout
+% (alternative:)
+%\settypeblocksize{42\baselineskip}{306.97359pt}{*} 
+%\checkandfixthelayout[lines]
+%\fixpdflayout
+$endif$
+\usepackage{hyperref}
+$if(colorlinks)$
+\PassOptionsToPackage{usenames,dvipsnames}{color} % color is loaded by hyperref
+$endif$
+\hypersetup{unicode=true,
+$if(title-meta)$
+            pdftitle={$title-meta$},
+$endif$
+$if(author-meta)$
+            pdfauthor={$if(anon)$$else$$author-meta$$endif$},
+$endif$
+$if(keywords)$
+            pdfkeywords={$for(keywords)$$keywords$$sep$; $endfor$},
+$endif$
+$if(colorlinks)$
+            colorlinks=true,
+            linkcolor=$if(linkcolor)$$linkcolor$$else$Maroon$endif$,
+            citecolor=$if(citecolor)$$citecolor$$else$Blue$endif$,
+            urlcolor=$if(urlcolor)$$urlcolor$$else$Blue$endif$,
+$else$
+            pdfborder={0 0 0},
+$endif$
+            breaklinks=true}
+\urlstyle{same}  % don't use monospace font for urls
+$if(lang)$
+\ifnum 0\ifxetex 1\fi\ifluatex 1\fi=0 % if pdftex
+  \usepackage[shorthands=off,$for(babel-otherlangs)$$babel-otherlangs$,$endfor$main=$babel-lang$]{babel}
+$if(babel-newcommands)$
+  $babel-newcommands$
+$endif$
+\else
+  \usepackage{polyglossia}
+  \setmainlanguage[$polyglossia-lang.options$]{$polyglossia-lang.name$}
+$for(polyglossia-otherlangs)$
+  \setotherlanguage[$polyglossia-otherlangs.options$]{$polyglossia-otherlangs.name$}
+$endfor$
+\fi
+$endif$
+
+$if(natbib)$
+\usepackage{natbib}
+\bibliographystyle{$if(biblio-style)$$biblio-style$$else$plainnat$endif$}
+$endif$
+
+$if(biblatex)$
+$if(biblatex-chicago)$
+\usepackage[$for(biblatexoptions)$$biblatexoptions$$sep$,$endfor$]{biblatex-chicago}
+$else$
+\usepackage$if(biblio-style)$[style=$biblio-style$]$endif${biblatex}
+$if(biblatexoptions)$\ExecuteBibliographyOptions{$for(biblatexoptions)$$biblatexoptions$$sep$,$endfor$}$endif$
+$endif$
+\defbibheading{memartbib}[\bibname]{\section{#1}}
+$if(clearbib)$
+\AtEveryBibitem{%
+    $for(clearbib)$\clearfield{$clearbib$}$endfor$%
+}
+% Make it hard for biblatex to break a line between G. and V. in G. V.
+\setcounter{highnamepenalty}{2000}
+\renewrobustcmd*{\bibinitdelim}{\addnbthinspace}
+$endif$
+$endif$
+
+$if(bibliography)$
+\bibliography{$bibliography$}
+$endif$
+
+$if(listings)$
+\usepackage{listings}
+$endif$
+$if(lhs)$
+\lstnewenvironment{code}{\lstset{language=Haskell,basicstyle=\small\ttfamily}}{}
+$endif$
+$if(highlighting-macros)$
+$highlighting-macros$
+% tweak code highlighting environment
+\RecustomVerbatimEnvironment{Highlighting}{Verbatim}{commandchars=\\\{\},fontsize=\small}
+% new environment to be used with R markdown (a knitr hook must also be set)
+\DefineVerbatimEnvironment{ROutput}{Verbatim}{frame=single,fontsize=\footnotesize}
+$endif$
+$if(verbatim-in-note)$
+\usepackage{fancyvrb}
+\VerbatimFootnotes % allows verbatim text in footnotes
+$endif$
+
+% tables (booktabs emulated by memoir)
+\usepackage{longtable}
+\usepackage{caption}
+% These lines are needed to make table captions work with longtable:
+\makeatletter
+\def\fnum@table{\tablename~\thetable}
+\makeatother
+
+% graphics
+\usepackage{graphicx}
+\makeatletter
+\def\maxwidth{\ifdim\Gin@nat@width>\linewidth\linewidth\else\Gin@nat@width\fi}
+\def\maxheight{\ifdim\Gin@nat@height>\textheight\textheight\else\Gin@nat@height\fi}
+\makeatother
+$if(graphicx-draft)$
+\setkeys{Gin}{width=\maxwidth,height=\maxheight,keepaspectratio,draft}
+$else$
+\setkeys{Gin}{width=\maxwidth,height=\maxheight,keepaspectratio}
+$endif$
+\usepackage[multidot]{grffile} % handle image file names like img.2.pdf
+
+$if(links-as-notes)$
+% Make links footnotes instead of hotlinks:
+\renewcommand{\href}[2]{#2\footnote{\url{#1}}}
+$endif$
+$if(strikeout)$
+\usepackage[normalem]{ulem}
+% avoid problems with \sout in headers with hyperref:
+\pdfstringdefDisableCommands{\renewcommand{\sout}{}}
+$endif$
+$if(indent)$
+$else$
+\IfFileExists{parskip.sty}{%
+\usepackage{parskip}
+}{% else
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{6pt plus 2pt minus 1pt}
+}
+$endif$
+
+% memoir's alternative to emergencystretch
+\midsloppy
+
+% tightlist support
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+
+% Chicago ellipses. The lips package conflicts with many modern LaTeX packages
+% but provides the only good implementation of this I could find. I
+% simply copy over the code here, condensing it slightly. The original
+% lips package is copyright 1995-2001 Matt Swift <swift@alum.mit.edu> and
+% distributed under the LaTeX Project Public License 1.2.
+$if(chicago-ellipses)$
+\makeatletter
+\newcommand*\Lips {}
+\let\Lips\relax
+\DeclareRobustCommand\Lips {%
+  \ifvmode \def\sc@t@a {%
+      \leavevmode
+      .\nobreak\ .\nobreak\ .\nobreak\ %
+    }%
+  \else
+    \let\sc@t@a\lp@lips@hmode
+  \fi
+  \sc@t@a
+}
+\newcommand\lp@lips@hmode {%
+  \unskip
+  \@ifnextchar . {%
+      .\penalty9999\ .\nobreak\ .\nobreak\ .\ %
+      \GobbleIgnoreSpaces
+    }{% ELSE
+    \penalty9999\ .\nobreak\ .\nobreak\ .%
+    \futurelet\sc@t@a\lp@lips@check@punct
+  }%
+}
+\newcommand\GobbleIgnoreSpaces [1] {%
+  \ignorespaces
+}
+\newcommand*\lp@bang {}
+\newcommand*\lp@rparen {}
+\newcommand*\lp@comma {}
+\newcommand*\lp@slash {}
+\newcommand*\lp@colon {}
+\newcommand*\lp@semic {}
+\newcommand*\lp@q {}
+\newcommand*\lp@rbrack {}
+\newcommand*\lp@rquote {}
+\newcommand*\lp@tilde {}
+
+\let\lp@bang=!
+\let\lp@rparen=)
+\let\lp@comma=,
+\let\lp@slash=/
+\let\lp@colon=:
+\let\lp@semic=;
+\let\lp@q=?
+\let\lp@rbrack=]
+\let\lp@rquote='
+\let\lp@tilde=~
+\newcommand \LPNobreakList {%
+  \lp@comma \lp@colon  \lp@semic
+  \lp@q \lp@bang 
+  \lp@rparen \lp@rquote \lp@rbrack \egroup
+  \lp@slash
+}
+\newcommand\lp@lips@check@punct {%
+  \ifx\sc@t@a\lp@tilde
+  \else
+    \@tempswatrue
+    \let\@fortmp\PunctList
+    \expandafter\@tforloop\LPNobreakList\@nil\@nil\@@\reserved@a {%
+      \ifx\sc@t@a\reserved@a
+	\@tempswafalse
+	\@break@tfor
+      \fi
+     }%
+    \if@tempswa
+      \ %
+    \else
+      \nobreak\ %
+    \fi
+  \fi
+}
+\makeatother
+\let\ldots=\Lips
+$endif$
+
+% Chicago footnotes
+\footmarkstyle{#1.~}
+\setlength{\footparindent}{1em}
+
+% Section styling
+\setsecheadstyle{\scshape\raggedright\MakeLowercase}
+$if(numbersections)$
+\setcounter{secnumdepth}{5}
+$else$
+\setcounter{secnumdepth}{-2}
+$endif$
+$if(subparagraph)$
+$else$
+% Redefines (sub)paragraphs to behave more like sections
+\ifx\paragraph\undefined\else
+\let\oldparagraph\paragraph
+\renewcommand{\paragraph}[1]{\oldparagraph{#1}\mbox{}}
+\fi
+\ifx\subparagraph\undefined\else
+\let\oldsubparagraph\subparagraph
+\renewcommand{\subparagraph}[1]{\oldsubparagraph{#1}\mbox{}}
+\fi
+$endif$
+
+% section headers
+$if(headers)$
+\ifdraftdoc
+    \makeoddhead{plain}%
+        {\footnotesize $dlhead$}%
+        {\footnotesize $dchead$}%
+        {\footnotesize $drhead$}
+    \makeoddfoot{plain}%
+        {\footnotesize $dlfoot$}%
+        {\footnotesize $dcfoot$}%
+        {\footnotesize $drfoot$}
+\else
+    \makeoddhead{plain}%
+        {\footnotesize $lhead$}%
+        {\footnotesize $chead$}%
+        {\footnotesize $rhead$}
+    \makeoddfoot{plain}%
+        {\footnotesize $lfoot$}%
+        {\footnotesize $cfoot$}%
+        {\footnotesize $rfoot$}
+\fi
+$endif$
+
+% titling: we won't use maketitle, though
+
+$if(title)$
+\title{$title$$if(thanks)$\thanks{$thanks$}$endif$}
+$endif$
+$if(author)$
+$if(anon)$
+\author{}
+$else$
+\author{$for(author)$$author$$sep$ \and $endfor$}
+$endif$
+$endif$
+\date{$date$}
+
+$if(dir)$
+\ifxetex
+  % load bidi as late as possible as it modifies e.g. graphicx
+  $if(latex-dir-rtl)$
+  \usepackage[RTLdocument]{bidi}
+  $else$
+  \usepackage{bidi}
+  $endif$
+\fi
+\ifnum 0\ifxetex 1\fi\ifluatex 1\fi=0 % if pdftex
+  \TeXXeTstate=1
+  \newcommand{\RL}[1]{\beginR #1\endR}
+  \newcommand{\LR}[1]{\beginL #1\endL}
+  \newenvironment{RTL}{\beginR}{\endR}
+  \newenvironment{LTR}{\beginL}{\endL}
+\fi
+$endif$
+
+$for(header-includes)$
+$header-includes$
+$endfor$
+
+\begin{document}
+$if(title)$
+\begin{flushleft}
+{\MakeUppercase \thetitle} $if(subtitle)$ \\ $subtitle$$endif$
+$if(anon)$$else$$if(author)$\\ \theauthor$endif$$endif$$if(date)$\\ \thedate$endif$
+\end{flushleft}
+$endif$
+$if(thanks)$$if(anon)$$else$
+\begingroup
+\setlength{\footmarkwidth}{0em}
+\setlength{\footmarksep}{0em}
+\setlength{\footparindent}{1em}
+\footmarkstyle{#1}
+\def\thefootnote{\fnsymbol{footnote}}
+\footnote[0]{$thanks$}
+\endgroup
+$endif$$endif$
+
+$if(abstract)$
+\begin{abstract}
+$abstract$
+\end{abstract}
+$endif$
+
+
+$for(include-before)$
+$include-before$
+
+$endfor$
+$if(toc)$
+{
+$if(colorlinks)$
+\hypersetup{linkcolor=$if(toccolor)$$toccolor$$else$black$endif$}
+$endif$
+\setcounter{tocdepth}{$toc-depth$}
+\tableofcontents
+}
+$endif$
+$if(lot)$
+\listoftables
+$endif$
+$if(lof)$
+\listoffigures
+$endif$
+
+\noindent $body$
+
+$if(natbib)$
+$if(bibliography)$
+$if(biblio-title)$
+$if(book-class)$
+\renewcommand\bibname{$biblio-title$}
+$else$
+\renewcommand\refname{$biblio-title$}
+$endif$
+$endif$
+\bibliography{$for(bibliography)$$bibliography$$sep$,$endfor$}
+
+$endif$
+$endif$
+$if(biblatex)$
+\printbibliography[heading=memartbib%
+$if(biblio-title)$,title=$biblio-title$$endif$]
+
+$endif$
+$for(include-after)$
+$include-after$
+
+$endfor$
+\end{document}
+
