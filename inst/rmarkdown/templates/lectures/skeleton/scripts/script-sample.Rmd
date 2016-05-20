@@ -4,8 +4,9 @@ author: Talky Talker
 date: Day of the Talk
 sansfont: Gill Sans
 mainfont: Hoefler Text
-highlight: zenburn
-output: scuro::scuro_md
+output:
+  scuro::scuro_md:
+    highlight: zenburn
 ---
 
 ```{r setup, include=F, cache=F}
