@@ -1,11 +1,39 @@
 
-#' A function for article classes
+#' A format for article classes
 #'
-#' To use scuro's font and figure-drawing setup with slides, use \code{\link{scuro_md}} but with format option \code{scuro=FALSE}.
+#' This format is meant to supply only the TikZ-wrangling features of the
+#' package and to set up reasonable further defaults for an article rather than
+#' a presentation. For slides that use scuro's font and figure-drawing setup
+#' but not its color scheme, use \code{\link{scuro_md}} but with format option
+#' \code{scuro=FALSE}.
+#'
+#' Among defaults selected here, of particular note are centering alignment for
+#' figures, a black-and-white ggplot theme, and stop-on-error. Errors,
+#' warnings, and messages will all go to the console, not into the final
+#' document.
+#'
+#' @param fig_width Natural figure width in inches. This is rescaled according
+#' to the value of chunk option `out.width` (configured to use the natural
+#' width or the textwidth, whichever is smaller).
+#'
+#' @param fig_height Natural figure height in inches.
+#' \code{fig_width/fig_height} is the aspect ratio of the graphic.
+#'
+#' @param fig_crop Apply \code{pdfcrop}? Set by default.
+#'
+#' @param latex_engine \code{xelatex} by default
+#'
+#' @param dev graphics device (\code{tikz}) by default.
+#'
+#' @param plot_font If both XeLaTeX and TikZ are used, the package will set the
+#' font in graphics. Any system font name can be given. The default value
+#' \code{mainfont} selects the document main font.
+#'
+#' @return An R Markdown format suitable for rendering.
 #'
 #' @export
 chiaro_md <- function (
-        fig_width=2,
+        fig_width=4,
         fig_height=2,
         fig_crop=TRUE,
         latex_engine="xelatex",
