@@ -1,9 +1,10 @@
 ---
 title: Essay
 author: Me
-date: '`r Sys.date()`'
+date: '`r Sys.Date()`'
 mainfont: Hoefler Text
 mainfontoptions: [Numbers=OldStyle]
+output: scuro::chiaro_md
 ---
 
 ```{r setup, cache=F}
