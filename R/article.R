@@ -16,11 +16,16 @@ chiaro_md <- function (
         plot_font, scuro=FALSE)
 
     result$knitr$opts_chunk$fig.path <- "figure/"
+    result$knitr$opts_chunk$fig.align <- "center"
+    # maxwidth macro defined in memoir-article.latex template
+    result$knitr$opts_chunk$out.width <- "\\maxwidth"
+
     result$knitr$opts_chunk$dark_theme <- FALSE
     result$knitr$opts_chunk$theme_bw <- TRUE
     result$knitr$knit_hooks$theme_bw <- set_theme_bw
 
-    result$knitr$knit_hooks$plot <- NULL # revert to default
+    # don't need the textpos plot hook, but need TeX figures
+    result$knitr$knit_hooks$plot <- knitr::hook_plot_tex
 
     result$pandoc$args <- result$pandoc$args[
         grep("\\.yaml$", result$pandoc$args, invert=TRUE)
@@ -41,8 +46,8 @@ chiaro_md <- function (
 #' @export
 make_article <- function (target="all") { 
     makefile <- system.file(
-        file.path("memoirarticle", "Makefile"), package="scuro")
-    tmpl <- system.file(file.path("memoirarticle", "memoir-article.latex"),
+        file.path("memarticle", "Makefile"), package="scuro")
+    tmpl <- system.file(file.path("memarticle", "memoir-article.latex"),
         package="scuro")
     system2("make", c(
         paste0("PANDOC_TMPL=", tmpl), "out_dir=.",
