@@ -28,9 +28,11 @@ For displaying the slides, I recommend [Présentation](http://iihm.imag.fr/blanc
 
 The `course` directory also contains a `course.Rmd` file, which is just a stub required by the `rmarkdown` template structure. You can delete it.
 
+Because xelatex and tikz graphics are slow individually and very slow in combination, you may wish to use the `pdf` graphics device while you are drafting and only switch to TikZ when you are nearly finished. (You could also use the `pdflatex` engine, if you are not inputting complex Unicode text, and then switch to `xelatex` when you are ready to work on the typesetting in your chosen typefaces.)
+
 # The format
 
-The R package provides a single `rmarkdown` format, `scuro::scuro_md`. Using `rmarkdown::render` to this format (or RStudio's "Knit" button) generates a markdown file suitable for subsequent conversion into beamer slides, handouts, `beamerarticle` scripts, and 4-up speaker notes. The output is somewhat configurable; in particular, the YAML metadata can adjust fonts (the `sansfont` is used for the slides), code-highlighting schemes, and default figure dimensions. See the example `Rmd` files as well as the R help file for `scuro_md`.
+The R package provides an `rmarkdown` format `scuro::scuro_md`. Using `rmarkdown::render` to this format (or RStudio's "Knit" button) generates a markdown file suitable for subsequent conversion into beamer slides, handouts, `beamerarticle` scripts, and 4-up speaker notes. The output is somewhat configurable; in particular, the YAML metadata can adjust fonts (by default the `sansfont` is used for the slides), code-highlighting schemes, and default figure dimensions. See the example `Rmd` files as well as the R help file for `scuro_md`.
 
 One weakness of the dark-on-light scheme is that it doesn't look great on paper (and wastes ink); I am working on a solution.
 
@@ -68,3 +70,13 @@ Otherwise, the [underlying pandoc template](inst/elsmd/elsmd-slides.latex) is cl
 # "Scuro"?
 
 Because the slides are mostly dark, and little about knitr-xelatex-tikz wrangling is *chiaro*.
+
+# ..."chiaro"?
+
+The opposite of `scuro`. Also available here is a second R markdown format and template for articles-on-paper rather than presentations. This `chiaro_pdf` format (and the `article` template of this package) also support the xelatex-tikz combination. The only thing that is *chiaro* is the type on the page. See `?chiaro_pdf` and the demonstration file in the template generated from:
+
+```R
+rmarkdown::draft("essay", "article", "scuro", edit=F)
+```
+
+Unlike the triple-PDF setup for slides, this format is perfectly compatible with the "Knit" button in RStudio.
