@@ -147,7 +147,6 @@ scuro_knitr <- function (knitr_options,
     result$knitr$opts_chunk$warning <- FALSE
     result$knitr$opts_chunk$message <- FALSE
     result$knitr$opts_chunk$prompt <- FALSE
-    result$knitr$opts_chunk$comment <- NA
     result$knitr$opts_chunk$autodep <- TRUE
     result$knitr$opts_chunk$cache <- TRUE
 
