@@ -426,6 +426,7 @@ $endif$
 $endif$
 $endif$
 $if(biblatex)$
+\clearpage
 \printbibliography[heading=memartbib%
 $if(biblio-title)$,title=$biblio-title$$endif$]
 
