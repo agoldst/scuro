@@ -3,14 +3,15 @@ Title: An R Markdown Beamer-Presentation Setup
 Version: 0.1
 Authors@R: person("Andrew", "Goldstone", email = "andrew.goldstone@gmail.com", role = c("aut", "cre"))
 Description: This package provides a setup for creating beamer presentations with a dark-on-light color scheme from R markdown.
-Depends:
+Depends: 
     R (>= 3.2.2)
-Imports:
+Imports: 
     knitr,
     rmarkdown,
     tikzDevice
-Suggests:
-    ggplot2 (>= 2.0.0)
+Suggests: 
+    ggplot2 (>= 2.0.0),
+    testthat
 License: GPL3
 SystemRequirements: python
 LazyData: true
