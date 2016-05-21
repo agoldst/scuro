@@ -155,12 +155,13 @@ $if(routput-options)$
 \DefineVerbatimEnvironment{ROutput}{Verbatim}{%
     $for(routput-options)$$routput-options$$sep$,$endfor$}
 $else$
+\definecolor{ROutputColor}{rgb}{0.5, 0.5, 0.5}
 \DefineVerbatimEnvironment{ROutput}{Verbatim}{%
-    formatcom=\color{darkgray},%
-    fontsize=\footnotesize}
+    formatcom=\color{ROutputColor},%
+    fontsize=\footnotesize%
+}
 $endif$
 $endif$
-
 
 % graphics
 \usepackage{graphicx}
