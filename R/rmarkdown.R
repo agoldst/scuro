@@ -79,6 +79,10 @@ scuro_md <- function (
         if (is.null(meta)) {
             meta <- list()
         }
+        # inject routput flag used by the pandoc template
+        if (is.null(meta[["routput"]])) {
+            meta$routput <- TRUE
+        }
         if (scuro) {
             # propagate scuro setting up to top-level metadata
             meta$scuro <- TRUE
@@ -142,13 +146,13 @@ scuro_knitr <- function (knitr_options,
     knitr_options$opts_chunk$size <- "footnotesize"
     knitr_options$opts_chunk$dev.args <- list(pointsize=9)
 
-    result$knitr$opts_chunk$echo <- FALSE
-    result$knitr$opts_chunk$error <- FALSE
-    result$knitr$opts_chunk$warning <- FALSE
-    result$knitr$opts_chunk$message <- FALSE
-    result$knitr$opts_chunk$prompt <- FALSE
-    result$knitr$opts_chunk$autodep <- TRUE
-    result$knitr$opts_chunk$cache <- TRUE
+    knitr_options$opts_chunk$echo <- FALSE
+    knitr_options$opts_chunk$error <- FALSE
+    knitr_options$opts_chunk$warning <- FALSE
+    knitr_options$opts_chunk$message <- FALSE
+    knitr_options$opts_chunk$prompt <- FALSE
+    knitr_options$opts_chunk$autodep <- TRUE
+    knitr_options$opts_chunk$cache <- TRUE
 
     if (dev == "tikz" && latex_engine == "xelatex") {
         knitr_options$opts_chunk$tikz_xelatex <- TRUE
@@ -191,8 +195,8 @@ render_pdf <- function (input,
     pandoc_opts <- c()
     if (!is.null(meta) && is.list(meta$output)
             && is.list(meta$output[["scuro::scuro_md"]])) {
-        hlt <- meta$output[["scuro::scuro_md"]]$highlight
-        hltp <- meta$output[["scuro::scuro_md"]]$highlight_paper
+        hlt <- meta$output[["scuro::scuro_md"]][["highlight"]]
+        hltp <- meta$output[["scuro::scuro_md"]][["highlight_paper"]]
         if (!is.character(hlt) || hlt == "default") {
             hlt <- "kate"
         }
