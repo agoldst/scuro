@@ -14,8 +14,14 @@ $(pdfs): %.pdf: %.Rmd
 
 all: $(pdfs)
 
+# rmarkdown::render cleans up most intermediate files but leaves
+# these biber outputs
+tex_intermediates := $(patsubst %.tex,%.run.xml,$(texs)) \
+    $(patsubst %.tex,%.bbl,$(texs))
+
 clean:
 	rm -f $(texs)
+	rm -f $(tex_intermediates)
 
 reallyclean: clean
 	rm -rf $(mds)
