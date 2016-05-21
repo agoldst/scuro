@@ -34,6 +34,9 @@
 #'
 #' @param plot_font_options \code{fontspec} options for the \code{plot_font}.
 #'
+#' @param ... remaining arguments (e.g. \code{include}) are passed on to
+#' \code{\link[rmarkdown]{pdf_document}}, which is the base of this format.
+#'
 #' @return An R Markdown format suitable for rendering.
 #'
 #' @export
@@ -48,12 +51,18 @@ chiaro_pdf <- function (
         citation_package=c("none", "biblatex"),
         latex_engine="xelatex",
         plot_font="mainfont",
-        plot_font_options=NULL) {
+        plot_font_options=NULL,
+        pandoc_args=NULL,
+        ...) {
 
     tmpl <- system.file(file.path("memarticle", "memoir-article.latex"),
         package="scuro")
 
     citation_package <- match.arg(citation_package)
+
+    # default yaml (sets class option oneside and routput true)
+    yaml <- system.file(file.path("pandoc", "chiaro.yaml"),
+        package="scuro")
 
     result <- rmarkdown::pdf_document(
         toc=FALSE, toc_depth=2, number_sections=FALSE,
@@ -67,7 +76,8 @@ chiaro_pdf <- function (
         keep_tex=keep_tex,
         latex_engine=latex_engine,
         citation_package=citation_package,
-        pandoc_args=c("-V", "highlighting_macros")
+        pandoc_args=c(yaml, pandoc_args),
+        ...
     )
 
     result$knitr <- scuro_knitr(result$knitr,

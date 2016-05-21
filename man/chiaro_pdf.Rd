@@ -5,9 +5,10 @@
 \title{A format for article classes}
 \usage{
 chiaro_pdf(fig_width = 4, fig_height = 2, fig_crop = TRUE,
-  fig_caption = TRUE, dev = "tikz", highlight = "zenburn",
-  keep_tex = TRUE, latex_engine = "xelatex", plot_font = "mainfont",
-  plot_font_options = NULL)
+  fig_caption = TRUE, dev = "tikz", highlight = "default",
+  keep_tex = TRUE, citation_package = c("none", "biblatex"),
+  latex_engine = "xelatex", plot_font = "mainfont",
+  plot_font_options = NULL, pandoc_args = NULL, ...)
 }
 \arguments{
 \item{fig_width}{Natural figure width in inches. This is rescaled according
@@ -28,6 +29,9 @@ font in graphics. Any system font name can be given. The default value
 \code{mainfont} selects the document main font.}
 
 \item{plot_font_options}{\code{fontspec} options for the \code{plot_font}.}
+
+\item{...}{remaining arguments (e.g. \code{include}) are passed on to
+\code{\link[rmarkdown]{pdf_document}}, which is the base of this format.}
 }
 \value{
 An R Markdown format suitable for rendering.
