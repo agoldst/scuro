@@ -15,8 +15,7 @@ markdown template has example files demonstrating how to use what's here.
 \dontrun{
 library(rmarkdown)
 draft("my-talks", "lectures", "scuro", edit=F) # or RStudio "New R Markdown"
-setwd("my-talks")
-system("make")       # or run make in the shell
+system("make -C my-talks") # a Makefile is supplied
 }
 
 }

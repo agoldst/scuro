@@ -41,15 +41,29 @@ This format is meant to supply only the TikZ-wrangling features of the
 package and to set up reasonable further defaults for an article rather than
 a presentation. For slides that use scuro's font and figure-drawing setup
 but not its color scheme, use \code{\link{scuro_md}} but with format option
-\code{scuro=FALSE}. The built-in \code{\link[rmarkdown]{render}} is flexible
-enough to handle all the processing from R markdown to PDF,
-including citation processing where needed.
+\code{scuro=FALSE}. For an article, \pkg{rmarkdown}'s built-in
+\code{\link[rmarkdown]{render}} is flexible enough to handle all the
+processing from R markdown to PDF, including citation processing where
+needed. Simply set \code{output: scuro::chiaro_pdf} in your YAML header. The
+package includes an R markdown template demonstrating this format as well.
 }
 \details{
 Among defaults selected here, of particular note are centering alignment for
 figures, a black-and-white ggplot theme, and stop-on-error. Errors,
 warnings, and messages will all go to the console, not into the final
-document. The intermediate LaTeX file will also be kept as this is often
+document. The intermediate LaTeX file will also be kept, as this is often
 necessary to diagnose typesetting errors.
+
+Additional typesetting customizations are as described in
+\url{https://github.com/agoldst/memarticle} (the underlying pandoc
+template).
+}
+\examples{
+\dontrun{
+# create article from the included template
+rmarkdown::draft("my-essay", "article", "scuro", edit=F)
+system("make -C my-essay") # a Makefile is supplied
+}
+
 }
 
