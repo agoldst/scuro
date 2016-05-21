@@ -137,23 +137,30 @@ $if(lhs)$
 $endif$
 $if(highlighting-macros)$
 $highlighting-macros$
-% tweak code highlighting environment
-\RecustomVerbatimEnvironment{Highlighting}{Verbatim}{commandchars=\\\{\},fontsize=\small}
-% new environment to be used with R markdown (a knitr hook must also be set)
-\DefineVerbatimEnvironment{ROutput}{Verbatim}{frame=single,fontsize=\footnotesize}
+% tweak code highlighting environment used by pandoc
+$if(highlighting-options)$
+\RecustomVerbatimEnvironment{Highlighting}{Verbatim}{%
+    commandchars=\\\{\},%
+    $for(highlighting-options)$$highlighting-options$$sep$,$endfor$}
+$else$
+\RecustomVerbatimEnvironment{Highlighting}{Verbatim}{%
+    commandchars=\\\{\},fontsize=\small}
 $endif$
-$if(verbatim-in-note)$
-\usepackage{fancyvrb}
-\VerbatimFootnotes % allows verbatim text in footnotes
 $endif$
 
-% tables (booktabs emulated by memoir)
-\usepackage{longtable}
-\usepackage{caption}
-% These lines are needed to make table captions work with longtable:
-\makeatletter
-\def\fnum@table{\tablename~\thetable}
-\makeatother
+$if(routput)$
+% new environment to be used with R markdown (a knitr hook must also be set)
+\usepackage{fancyvrb}
+$if(routput-options)$
+\DefineVerbatimEnvironment{ROutput}{Verbatim}{%
+    $for(routput-options)$$routput-options$$sep$,$endfor$}
+$else$
+\DefineVerbatimEnvironment{ROutput}{Verbatim}{%
+    formatcom=\color{darkgray},%
+    fontsize=\footnotesize}
+$endif$
+$endif$
+
 
 % graphics
 \usepackage{graphicx}
