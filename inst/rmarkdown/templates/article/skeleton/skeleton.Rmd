@@ -25,7 +25,7 @@ The LaTeX is based on a custom template which uses the `memoir` package, the tem
 
 You can use `biblatex` or `biblatex-chicago` for references. In order to get `rmarkdown` to process this correctly, set `citation_package: biblatex` as a *format* option (under `scuro::chiaro_pdf`). For `biblatex-chicago`, set  metadata key `biblatex-chicago: true`. Set the remaining pandoc bibliography keys as normal, including `biblatexoptions` and `bibliography`. Set `citation_package: none` to disable this feature.\autocite[An example citation:][]{wilde:soul}
 
-```{r cars, fig.cap="Something about cars",fig.pos="b"}
+```{r cars, fig.cap="Something about cars"}
 ggplot(mtcars) +
     geom_point(aes(wt, mpg, color=factor(gear))) +
     labs(color="Gear")
