@@ -1,20 +1,27 @@
 #' Code output environment hook
 #'
 #' Not called directly but automatically set as knitr's output hook. This puts
-#' R output into an \code{ROutput} environment which it is up to you to define
-#' with something like
-#' \code{\\DefineVerbatimEnvironment{ROutput}{Verbatim}{frame=single,fontsize=\\footnotesize}}
-#' (which is what's in the included pandoc templates used with the
-#' \code{lectures} R Markdown template).
+#' R output into an \code{ROutput} environment. If you use the included
+#' templates this will be set up with a default style. You can adjust the
+#' appearance of this output by adding an array of \code{routput-options} to
+#' your document metadata. These are supplied to the definition of
+#' \code{ROutput} via the \code{fancyvrb} package:
+#'
+#' \code{\\DefineVerbatimEnvironment{ROutput}{Verbatim}{...}}
+#'
+#' \code{...} is replaced with your \code{routput-options}. If you do not use
+#' the included templates, either remove this output hook or define your own
+#' \code{ROutput} environment.
 #'
 #' @export
 #'
 output_hook_routput <- function (x, options) {
-    paste(c("\\begin{ROutput}",
-            sub("\n$", "", x),
-            "\\end{ROutput}",
-            ""),
-          collapse="\n")
+    paste(
+        c("\\begin{ROutput}",
+          sub("\n$", "", x),
+          "\\end{ROutput}"),
+        collapse="\n"
+    )
 }
 
 #' Plot placement and resizing hook
