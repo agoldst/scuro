@@ -2,7 +2,7 @@
 title: Datalogical Investigations
 author: Typographer Q. Statisticalanalysis
 date: '`r format(Sys.Date(), "%B %e, %Y")`'
-mainfont: Hoefler Text
+mainfont: Minion Pro
 mainfontoptions: [Numbers=OldStyle]
 biblatex-chicago: true
 biblatexoptions: [notes]
