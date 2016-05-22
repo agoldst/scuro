@@ -20,6 +20,9 @@ xelatex := true
 # list of markdown files that are not to be made into PDFs
 EXCLUDE := README.md
 
+# Extra options to pandoc (e.g. "-H mypreamble.tex")
+PANDOC_OPTIONS :=
+
 ## ---- special external file ----
 
 # Normally this does not need to be changed:
@@ -29,7 +32,6 @@ PANDOC_TMPL := memoir-article.latex
 ## ---- subdirectories (normally, no need to change) ----
 
 # source of markdowns
-
 md_dir := .
 
 # temporary file subdirectory; will be removed after every latex run
@@ -43,12 +45,11 @@ out_dir := out
 # Change these only to really change the behavior of the whole setup
 
 PANDOC := pandoc $(if $(xelatex),--latex-engine xelatex) \
-    --template $(PANDOC_TMPL)
+    --template $(PANDOC_TMPL) $(PANDOC_OPTIONS)
 
 LATEXMK := latexmk $(if $(xelatex),-xelatex,-pdflatex="pdflatex %O %S") \
     -pdf -dvi- -ps- $(if $(latex_quiet),-silent,-verbose) \
     -outdir=$(temp_dir)
-
 
 ## ---- build rules ----
 

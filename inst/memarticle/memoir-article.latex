@@ -309,31 +309,26 @@ $endif$
 
 % section headers
 $if(headers)$
-\ifdraftdoc
-    \makeoddhead{plain}%
-        {\footnotesize $dlhead$}%
-        {\footnotesize $dchead$}%
-        {\footnotesize $drhead$}
-    \makeoddfoot{plain}%
-        {\footnotesize $dlfoot$}%
-        {\footnotesize $dcfoot$}%
-        {\footnotesize $drfoot$}
-\else
-    \makeoddhead{plain}%
-        {\footnotesize $lhead$}%
-        {\footnotesize $chead$}%
-        {\footnotesize $rhead$}
-    \makeoddfoot{plain}%
-        {\footnotesize $lfoot$}%
-        {\footnotesize $cfoot$}%
-        {\footnotesize $rfoot$}
-\fi
+\makeoddhead{plain}%
+    {\small $olhead$}%
+    {\small $ochead$}%
+    {\small $orhead$}
+\makeoddfoot{plain}%
+    {\small $olfoot$}%
+    {\small $ocfoot$}%
+    {\small $orfoot$}
+\makeevenhead{plain}%
+    {\small $elhead$}%
+    {\small $echead$}%
+    {\small $erhead$}
+\makeevenfoot{plain}%
+    {\small $elfoot$}%
+    {\small $ecfoot$}%
+    {\small $erfoot$}
 $endif$
 
-% titling: we won't use maketitle, though
-
 $if(title)$
-\title{$title$}
+\title{$title$$if(subtitle)$ \\ $subtitle$$endif$}
 $endif$
 $if(author)$
 $if(anon)$
@@ -343,6 +338,29 @@ $else$
 $endif$
 $endif$
 \date{$date$}
+
+$if(manual-title)$
+$else$
+% A default title block style
+\renewcommand{\maketitlehooka}{\begin{center}%
+\Large%
+$if(titlefont)$
+    \fontspec[$for(titlefontoptions)$$titlefontoptions$$sep$,$endfor$]{$titlefont$}%
+$endif$
+}
+\pretitle{}
+\posttitle{\par}
+\renewcommand{\maketitlehookb}{%
+      \hrulefill\par%
+$if(anon)$$else$$if(author)$\vspace{0.5\baselineskip}$endif$$endif$} \preauthor{\scshape\MakeLowercase}
+\postauthor{}
+\renewcommand{\maketitlehookc}{}
+\newcommand{\GOBBLEDATE}[1]{}
+\predate{\GOBBLEDATE}
+\postdate{}
+\renewcommand{\maketitlehookd}{\end{center}}
+\makeoddhead{myheadings}{}{}{\small\thedate}
+$endif$
 
 $if(dir)$
 \ifxetex
@@ -367,24 +385,12 @@ $header-includes$
 $endfor$
 
 \begin{document}
+
 $if(manual-title)$
 $else$
 $if(title)$
-\begin{center}
-{
-\ifxetex\addfontfeature{Style=Display}\fi
-{\Large{\thetitle $if(subtitle)$: $subtitle$$endif$}} \\
-\hrulefill
-
-\vspace\baselineskip
-
-$if(anon)$$else$$if(author)${\large \theauthor}$endif$$endif$
-
-\vspace{0.5\baselineskip}
-
-$if(date)$\textsc{\MakeLowercase\thedate}$endif$
-}
-\end{center}
+\maketitle
+\thispagestyle{myheadings}
 $endif$
 $endif$
 $if(thanks)$$if(anon)$$else$
