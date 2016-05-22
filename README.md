@@ -10,6 +10,12 @@ The included `memoir-article.latex` template adds support for a few extra metada
 
 For font settings, the `mainfont`, `mainfontoptions`, etc. metadata variables work as in the pandoc default.
 
+Note in the example `paper.md` file the use of `classoption` to set symmetric margins. The page headers and footers can be set with metadata variables `olhead` (odd-side left header), `ecfoot` (even-side center footer), etc.; these variables can contain LaTeX (e.g. `ecfoot: '\thepage'`). The typeface for the title block can be configured with `titlefont`. If the title block layout used here does not appeal, set `manual-title: true` (in which case `\maketitle` is not used) and compose one as you prefer. More exacting control over the overall page layout is best achieved by writing a file of LaTeX using `memoir`'s layout facilities to include in the preamble. If the styling file is called `layout.tex`, then change the Makefile definition of `PANDOC_OPTIONS` to insert the relevant file into the preamble:
+
+```Make
+PANDOC_OPTIONS := -H layout.tex
+```
+
 ## Chicago Style
 
 To use the marvelous `biblatex-chicago` package for marvelous *Chicago Manual of Style* bibliography generation, set:
