@@ -59,7 +59,7 @@ $if(geometry)$
 \usepackage[$for(geometry)$$geometry$$sep$,$endfor$]{geometry}
 % Use default memoir page layout
 % (alternative:)
-%\settypeblocksize{42\baselineskip}{306.97359pt}{*} 
+%\settypeblocksize{42\baselineskip}{306.97359pt}{*}
 %\checkandfixthelayout[lines]
 %\fixpdflayout
 $endif$
@@ -257,7 +257,7 @@ $if(chicago-ellipses)$
 \let\lp@tilde=~
 \newcommand \LPNobreakList {%
   \lp@comma \lp@colon  \lp@semic
-  \lp@q \lp@bang 
+  \lp@q \lp@bang
   \lp@rparen \lp@rquote \lp@rbrack \egroup
   \lp@slash
 }
@@ -333,7 +333,7 @@ $endif$
 % titling: we won't use maketitle, though
 
 $if(title)$
-\title{$title$$if(thanks)$\thanks{$thanks$}$endif$}
+\title{$title$}
 $endif$
 $if(author)$
 $if(anon)$
@@ -367,11 +367,25 @@ $header-includes$
 $endfor$
 
 \begin{document}
+$if(manual-title)$
+$else$
 $if(title)$
-\begin{flushleft}
-{\MakeUppercase \thetitle} $if(subtitle)$ \\ $subtitle$$endif$
-$if(anon)$$else$$if(author)$\\ \theauthor$endif$$endif$$if(date)$\\ \thedate$endif$
-\end{flushleft}
+\begin{center}
+{
+\ifxetex\addfontfeature{Style=Display}\fi
+{\Large{\thetitle $if(subtitle)$: $subtitle$$endif$}} \\
+\hrulefill
+
+\vspace\baselineskip
+
+$if(anon)$$else$$if(author)${\large \theauthor}$endif$$endif$
+
+\vspace{0.5\baselineskip}
+
+$if(date)$\textsc{\MakeLowercase\thedate}$endif$
+}
+\end{center}
+$endif$
 $endif$
 $if(thanks)$$if(anon)$$else$
 \begingroup
