@@ -1,14 +1,13 @@
 ## ---- user config ----
 
-# Set to anything non-empty to suppress most of latex's messaging. To diagnose LaTeX errors, you may want to do `make latex_quiet=""` to get verbose output
+# Set to anything non-empty to suppress most of latex's messaging. To diagnose
+# LaTeX errors, you may want to do `make latex_quiet=""` to get verbose output
 latex_quiet := true
 
 # Set to anything non-empty to reprocess TeX files every time we make a PDF.
 # Otherwise these files will be regenerated only when the source markdown
 # changes; in that case, if you change other dependencies (e.g. a
-# bibliography), you will have to use the -B option to make in order to force
-# regeneration. If you have many talks it probably makes more to take this
-# manual option.
+# bibliography), use the -B option to make in order to force regeneration.
 # always_latexmk := true
 always_latexmk := 
 
