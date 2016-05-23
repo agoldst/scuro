@@ -24,7 +24,7 @@ PANDOC_OPTIONS := -H layout.tex
 
 ## Chicago Style
 
-To use the marvelous `biblatex-chicago` package for marvelous *Chicago Manual of Style* bibliography generation, set:
+To use the marvelous `biblatex-chicago` package for *Chicago Manual of Style* bibliography generation, set:
 
 ```yaml
 biblatex: true
