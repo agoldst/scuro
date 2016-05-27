@@ -198,6 +198,12 @@ $endif$
 % memoir's alternative to emergencystretch
 \midsloppy
 
+$if(nofrenchspacing)$
+$else$
+% Less spacing after periods
+\frenchspacing
+$endif$
+
 % tightlist support
 \providecommand{\tightlist}{%
   \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
