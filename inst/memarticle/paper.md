@@ -13,6 +13,7 @@ biblatex: true
 biblatex-chicago: true
 biblatexoptions: notes
 bibliography: ../sources.bib
+nobib: false
 chicago-ellipses: true
 anon: false
 thanks: |

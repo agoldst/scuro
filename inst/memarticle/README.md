@@ -37,3 +37,4 @@ Note that the bibliography path is relative to the `out` directory that is creat
 
 Footnotes are also formatted according to Chicago's recommendations. To use widely spaced ellipses, specify `chicago-ellipses: true`.
 
+If you use full citations in notes and do not want a bibliography, use option `nobib: true`.

@@ -452,11 +452,14 @@ $endif$
 
 $endif$
 $endif$
+$if(nobib)$
+$else$
 $if(biblatex)$
 \clearpage
 \printbibliography[heading=memartbib%
 $if(biblio-title)$,title=$biblio-title$$endif$]
 
+$endif$
 $endif$
 $for(include-after)$
 $include-after$
