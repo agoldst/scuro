@@ -1,7 +1,7 @@
 ---
-title: A Stylish Essay
-subtitle: If Not an Entirely Serious One
-author: Stylish Writer
+title: The Soul of Man under Socialism
+subtitle: (Excerpt)
+author: Oscar Wilde
 date: February, 1891
 mainfont: Garamond Premier Pro
 mainfontoptions:
@@ -13,15 +13,16 @@ biblatex: true
 biblatex-chicago: true
 biblatexoptions: notes
 bibliography: ../sources.bib
+nobib: false
 chicago-ellipses: true
 anon: false
 thanks: |
     I am grateful to Oscar Wilde, naturally. For the text I have gone to
     \url{http://marxists.org}, but see the bibliography.\nocite{wilde:soul}
+titlefont: Garamond Premier Pro Display
 ---
 
 The chief advantage that would result from the establishment of Socialism is, undoubtedly, the fact that Socialism would relieve us from that sordid necessity of living for others which, in the present condition of things, presses so hardly upon almost everybody. In fact, scarcely anyone at all escapes.
-
 
 Now and then, in the course of the century, a great man of science, like Darwin; a great poet, like Keats; a fine critical spirit, like M. Renan; a supreme artist, like Flaubert, has been able to isolate himself, to keep himself out of reach of the clamorous claims of others, to stand ‘under the shelter of the wall,’ as Plato puts it, and so to realise the perfection of what was in him, to his own incomparable gain, and to the incomparable and lasting gain of the whole world. These, however, are exceptions. The majority of people spoil their lives by an unhealthy and exaggerated altruism – are forced, indeed, so to spoil them. They find themselves surrounded by hideous poverty, by hideous ugliness, by hideous starvation. It is inevitable that they should be strongly moved by all this. The emotions of man are stirred more quickly than man’s intelligence; and, as I pointed out some time ago in an article on the function of criticism, it is much more easy to have sympathy with suffering than it is to have sympathy with thought. Accordingly, with admirable, though misdirected intentions, they very seriously and very sentimentally set themselves to the task of remedying the evils that they see. But their remedies do not cure the disease: they merely prolong it. Indeed, their remedies are part of the disease.
 

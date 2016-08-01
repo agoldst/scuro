@@ -59,7 +59,7 @@ $if(geometry)$
 \usepackage[$for(geometry)$$geometry$$sep$,$endfor$]{geometry}
 % Use default memoir page layout
 % (alternative:)
-%\settypeblocksize{42\baselineskip}{306.97359pt}{*} 
+%\settypeblocksize{42\baselineskip}{306.97359pt}{*}
 %\checkandfixthelayout[lines]
 %\fixpdflayout
 $endif$
@@ -198,16 +198,22 @@ $endif$
 % memoir's alternative to emergencystretch
 \midsloppy
 
+$if(nofrenchspacing)$
+$else$
+% Less spacing after periods
+\frenchspacing
+$endif$
+
 % tightlist support
 \providecommand{\tightlist}{%
   \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
 
+$if(chicago-ellipses)$
 % Chicago ellipses. The lips package conflicts with many modern LaTeX packages
 % but provides the only good implementation of this I could find. I
 % simply copy over the code here, condensing it slightly. The original
 % lips package is copyright 1995-2001 Matt Swift <swift@alum.mit.edu> and
 % distributed under the LaTeX Project Public License 1.2.
-$if(chicago-ellipses)$
 \makeatletter
 \newcommand*\Lips {}
 \let\Lips\relax
@@ -257,7 +263,7 @@ $if(chicago-ellipses)$
 \let\lp@tilde=~
 \newcommand \LPNobreakList {%
   \lp@comma \lp@colon  \lp@semic
-  \lp@q \lp@bang 
+  \lp@q \lp@bang
   \lp@rparen \lp@rquote \lp@rbrack \egroup
   \lp@slash
 }
@@ -307,33 +313,33 @@ $else$
 \fi
 $endif$
 
-% section headers
-$if(headers)$
-\ifdraftdoc
-    \makeoddhead{plain}%
-        {\footnotesize $dlhead$}%
-        {\footnotesize $dchead$}%
-        {\footnotesize $drhead$}
-    \makeoddfoot{plain}%
-        {\footnotesize $dlfoot$}%
-        {\footnotesize $dcfoot$}%
-        {\footnotesize $drfoot$}
-\else
-    \makeoddhead{plain}%
-        {\footnotesize $lhead$}%
-        {\footnotesize $chead$}%
-        {\footnotesize $rhead$}
-    \makeoddfoot{plain}%
-        {\footnotesize $lfoot$}%
-        {\footnotesize $cfoot$}%
-        {\footnotesize $rfoot$}
-\fi
+$if(caption)$
+% caption styling
+\usepackage[$for(caption)$$caption$$sep$,$endfor$]{caption}
 $endif$
 
-% titling: we won't use maketitle, though
+$if(headers)$
+% section headers
+\makeoddhead{plain}%
+    {\small $olhead$}%
+    {\small $ochead$}%
+    {\small $orhead$}
+\makeoddfoot{plain}%
+    {\small $olfoot$}%
+    {\small $ocfoot$}%
+    {\small $orfoot$}
+\makeevenhead{plain}%
+    {\small $elhead$}%
+    {\small $echead$}%
+    {\small $erhead$}
+\makeevenfoot{plain}%
+    {\small $elfoot$}%
+    {\small $ecfoot$}%
+    {\small $erfoot$}
+$endif$
 
 $if(title)$
-\title{$title$$if(thanks)$\thanks{$thanks$}$endif$}
+\title{$title$$if(subtitle)$ \\ $subtitle$$endif$}
 $endif$
 $if(author)$
 $if(anon)$
@@ -343,6 +349,29 @@ $else$
 $endif$
 $endif$
 \date{$date$}
+
+$if(manual-title)$
+$else$
+% A default title block style
+\renewcommand{\maketitlehooka}{\begin{center}%
+\Large%
+$if(titlefont)$
+    \fontspec[$for(titlefontoptions)$$titlefontoptions$$sep$,$endfor$]{$titlefont$}%
+$endif$
+}
+\pretitle{}
+\posttitle{\par}
+\renewcommand{\maketitlehookb}{%
+      \hrulefill\par%
+$if(anon)$$else$$if(author)$\vspace{0.5\baselineskip}$endif$$endif$} \preauthor{\scshape\MakeLowercase}
+\postauthor{}
+\renewcommand{\maketitlehookc}{}
+\newcommand{\GOBBLEDATE}[1]{}
+\predate{\GOBBLEDATE}
+\postdate{}
+\renewcommand{\maketitlehookd}{\end{center}}
+\makeoddhead{myheadings}{}{}{\small\thedate}
+$endif$
 
 $if(dir)$
 \ifxetex
@@ -367,11 +396,13 @@ $header-includes$
 $endfor$
 
 \begin{document}
+
+$if(manual-title)$
+$else$
 $if(title)$
-\begin{flushleft}
-{\MakeUppercase \thetitle} $if(subtitle)$ \\ $subtitle$$endif$
-$if(anon)$$else$$if(author)$\\ \theauthor$endif$$endif$$if(date)$\\ \thedate$endif$
-\end{flushleft}
+\maketitle
+\thispagestyle{myheadings}
+$endif$
 $endif$
 $if(thanks)$$if(anon)$$else$
 \begingroup
@@ -426,11 +457,14 @@ $endif$
 
 $endif$
 $endif$
+$if(nobib)$
+$else$
 $if(biblatex)$
 \clearpage
 \printbibliography[heading=memartbib%
 $if(biblio-title)$,title=$biblio-title$$endif$]
 
+$endif$
 $endif$
 $for(include-after)$
 $include-after$
