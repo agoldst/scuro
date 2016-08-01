@@ -208,12 +208,12 @@ $endif$
 \providecommand{\tightlist}{%
   \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
 
+$if(chicago-ellipses)$
 % Chicago ellipses. The lips package conflicts with many modern LaTeX packages
 % but provides the only good implementation of this I could find. I
 % simply copy over the code here, condensing it slightly. The original
 % lips package is copyright 1995-2001 Matt Swift <swift@alum.mit.edu> and
 % distributed under the LaTeX Project Public License 1.2.
-$if(chicago-ellipses)$
 \makeatletter
 \newcommand*\Lips {}
 \let\Lips\relax
@@ -313,8 +313,13 @@ $else$
 \fi
 $endif$
 
-% section headers
+$if(caption)$
+% caption styling
+\usepackage[$for(caption)$$caption$$sep$,$endfor$]{caption}
+$endif$
+
 $if(headers)$
+% section headers
 \makeoddhead{plain}%
     {\small $olhead$}%
     {\small $ochead$}%
