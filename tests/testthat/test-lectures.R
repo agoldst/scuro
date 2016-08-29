@@ -41,4 +41,17 @@ test_that("default make does what we want", {
     expect_false(file.exists(d))
 })
 
+test_that("make phony does what we want", {
+    rmarkdown::draft(d, "lectures", "scuro", edit=F)
+    system2("make", c("-C", d, "notes-sample"))
+    expect_equal(list.files(file.path(d, "slides")),
+                 paste0("notes-", c("sample.pdf", "sample.tex")))
+    expect_equal(list.files(file.path(d, "lectures")),
+                 paste0("notes-", c("sample.pdf", "sample.tex")))
+    expect_equal(list.files(file.path(d, "handouts")),
+                 paste0("notes-", c("sample.pdf", "sample.tex")))
+    unlink(d, recursive=T)
+    expect_false(file.exists(d))
+})
+
 unlink(tmp)

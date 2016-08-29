@@ -4,7 +4,10 @@
 # make -B slides/X.pdf force regeneration even if make thinks it's not needed
 #                      (every dependency will be rebuilt; to rerun latex only,
 #                      touch slides/X.tex; make slides/X.pdf)
-# make clean
+# make X               generate {slides,lecture,handout}/X.pdf from notes/X.Rmd
+#                      or scripts/X.Rmd
+# make clean           remove intermediate files
+# make reallyclean     remove intermediate files and outputs
 
 notes_rmd := $(wildcard notes/*.Rmd)
 notes_md := $(patsubst notes/%.Rmd,notes_md/%.md,$(notes_rmd))
@@ -27,7 +30,10 @@ scripts_pdf := $(slides_scripts_pdf) $(lectures_scripts_pdf) $(handouts_scripts_
 pdfs := $(notes_pdf) $(scripts_pdf)
 texs := $(patsubst %.pdf,%.tex,$(pdfs))
 
-.PHONY: $(mds) $(pdfs) all clean reallyclean
+pdfset_notes := $(notdir $(basename $(notes_rmd)))
+pdfset_scripts := $(notdir $(basename $(scripts_rmd)))
+
+.PHONY: $(mds) $(pdfs) all clean reallyclean $(pdfset_notes) $(pdfset_scripts)
 
 $(notes_md): notes_md/%.md: notes/%.Rmd
 	mkdir -p $(dir $@)
@@ -49,6 +55,12 @@ $(lectures_scripts_pdf): lectures/%.pdf: scripts_md/%.md
 	R -e 'scuro::render_pdf("$<", "lecture")'
 $(handouts_scripts_pdf): handouts/%.pdf: scripts_md/%.md
 	R -e 'scuro::render_pdf("$<", "handout")'
+
+$(pdfset_notes): %:notes_md/%.md
+	R -e 'scuro::render_pdf("$<", c("slides", "lecture", "handout"))'
+
+$(pdfset_scripts): %:scripts_md/%.md
+	R -e 'scuro::render_pdf("$<", c("slides", "lecture", "handout"))'
 
 all: $(pdfs)
 
