@@ -7,7 +7,7 @@
 scuro_md(fig_width = 4.5, fig_height = 2.75, fig_crop = TRUE,
   highlight = "zenburn", highlight_paper = "monochrome",
   latex_engine = "xelatex", dev = "tikz", plot_font = "sansfont",
-  plot_font_options = NULL, scuro = TRUE)
+  plot_font_options = NULL, slide_level = 2, scuro = TRUE)
 }
 \arguments{
 \item{fig_width, fig_height}{default figure dimensions (inches). Note that
@@ -40,6 +40,9 @@ LaTeX default.}
 \item{plot_font_options}{given a \code{plot_font}, font options. if
 \code{plot_font} is \code{"sansfont"} or \code{"mainfont"}, the
 corresponding font options will be used by default.}
+
+\item{slide_level}{for slides from notes only (not from scripts), set the
+pandoc slide level (headers at or above the level start new slides).}
 
 \item{scuro}{whether to apply the scuro color scheme to slides themselves.}
 }
