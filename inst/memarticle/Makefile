@@ -52,7 +52,7 @@ LATEXMK := latexmk $(if $(xelatex),-xelatex,-pdflatex="pdflatex %O %S") \
 
 ## ---- build rules ----
 
-mds := $(filter-out $(md_dir)/$(EXCLUDE),$(wildcard $(md_dir)/*.md))
+mds := $(filter-out $(addprefix $(md_dir)/,$(EXCLUDE)),$(wildcard $(md_dir)/*.md))
 
 texs := $(patsubst $(md_dir)/%.md,$(out_dir)/%.tex,$(mds))
 pdfs := $(patsubst $(md_dir)/%.md,$(out_dir)/%.pdf,$(mds)) 
