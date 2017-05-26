@@ -25,4 +25,3 @@ a \code{\link[ggplot2]{theme}} object that can be added to a plot.
 \description{
 Add this to your ggplots for a light-on-dark theme, suitable for matching to light-on-dark slides. Or use the chunk option \code{dark_theme=T}.
 }
-

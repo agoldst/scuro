@@ -7,7 +7,7 @@
 scuro_md(fig_width = 4.5, fig_height = 2.75, fig_crop = TRUE,
   highlight = "zenburn", highlight_paper = "monochrome",
   latex_engine = "xelatex", dev = "tikz", plot_font = "sansfont",
-  plot_font_options = NULL, slide_level = 2, scuro = TRUE)
+  plot_font_options = NULL, slide_level = 1, scuro = TRUE)
 }
 \arguments{
 \item{fig_width, fig_height}{default figure dimensions (inches). Note that
@@ -62,4 +62,3 @@ files and example source. In RStudio, choose "File > New File > R
 Markdown...", choose "From Template," and select "Dark-on-Light Beamer
 Slides."
 }
-

@@ -19,4 +19,3 @@ system("make -C my-talks") # a Makefile is supplied
 }
 
 }
-

@@ -21,4 +21,3 @@ your document metadata. These are supplied to the definition of
 the included templates, either remove this output hook or define your own
 \code{ROutput} environment.
 }
-

@@ -51,4 +51,3 @@ options than this does. But in my workflow we are knitting to markdown, not
 LaTeX. That's a simplifying decision in some ways but with some costs in
 flexibility.
 }
-

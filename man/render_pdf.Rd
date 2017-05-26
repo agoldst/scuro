@@ -19,4 +19,3 @@ Knitted markdown can be converted into the multiple forms that support a
 lecture with this function. It is just a wrapper for an invocation of
 \code{make}.
 }
-

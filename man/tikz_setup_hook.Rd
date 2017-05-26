@@ -13,4 +13,3 @@ normally specified by the document metadata either explicitly or implicitly)
 to generate graphics. It is set as the \code{tikz_xelatex} hook and by
 default all chunks have \code{tikz_xelatex=T} among their options.
 }
-

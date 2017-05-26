@@ -66,4 +66,3 @@ system("make -C my-essay") # a Makefile is supplied
 }
 
 }
-
