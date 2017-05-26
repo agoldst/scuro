@@ -60,7 +60,7 @@ scuro_md <- function (
         dev="tikz",
         plot_font="sansfont",
         plot_font_options=NULL,
-        slide_level=2,
+        slide_level=1,
         scuro=TRUE) {
 
     result <- rmarkdown::md_document(
