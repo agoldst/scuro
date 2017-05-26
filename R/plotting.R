@@ -53,7 +53,7 @@ dark_plot_theme <- function(base_size=9, base_family="",
     axis.title.y=ggplot2::element_text(
         size=ggplot2::rel(1), color=light, angle=90, vjust=0.5
     ),
-    axis.ticks.length=grid::unit(0.3, "lines"),
+    axis.ticks.length=ggplot2::unit(0.3, "lines"),
 
     # legend options
     legend.background=ggplot2::element_rect(color=NA, fill=dark),
@@ -73,7 +73,7 @@ dark_plot_theme <- function(base_size=9, base_family="",
     panel.border=ggplot2::element_rect(fill=NA, color=light),
     panel.grid.major=ggplot2::element_line(color=ramp(0.1)),
     panel.grid.minor=ggplot2::element_blank(),
-    panel.margin=ggplot2::margin(0.25, unit="lines"),
+    panel.spacing=ggplot2::unit(0.25, unit="lines"),
 
     # faceting options
     strip.background=ggplot2::element_rect(fill=ramp(0.1), color=light),

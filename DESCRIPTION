@@ -10,7 +10,7 @@ Imports:
     rmarkdown,
     tikzDevice
 Suggests: 
-    ggplot2 (>= 2.0.0),
+    ggplot2 (>= 2.2.0),
     testthat
 License: GPL3
 SystemRequirements: python
