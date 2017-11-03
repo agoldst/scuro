@@ -151,6 +151,10 @@ $endif$
 $if(routput)$
 % new environment to be used with R markdown (a knitr hook must also be set)
 \usepackage{fancyvrb}
+$if(highlighting-macros)$
+$else$
+\usepackage{color}
+$endif$
 $if(routput-options)$
 \DefineVerbatimEnvironment{ROutput}{Verbatim}{%
     $for(routput-options)$$routput-options$$sep$,$endfor$}
@@ -161,6 +165,11 @@ $else$
     fontsize=\footnotesize%
 }
 $endif$
+$endif$
+
+% tables
+$if(tables)$
+\usepackage{longtable,booktabs}
 $endif$
 
 % graphics
