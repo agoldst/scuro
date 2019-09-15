@@ -40,11 +40,9 @@ You do not need to load the `scuro` library in your Rmd file.
 
 ## Overlay specifications (incremental builds)
 
-Beamer supports what it calls "overlay specifications," that is, ways of generating multiple copies of a slide with varying pieces of the content visible. But the `<1,3>` notation beamer uses doesn't always work well with pandoc's markdown processing. This package kludgily fixes this issue with a [pandoc filter](inst/elsmd/overlay_filter). Instead of beamer's `<...>`, however, you should use `{<...>}`, as in
+Beamer supports what it calls "overlay specifications," that is, ways of generating multiple copies of a slide with varying pieces of the content visible.
 
-```latex
-\note{<1,3>}{I am a note for stages 1 and 3.}
-```
+In past versions of this package, I specified beamer overlays with `{<...>}` to get round an issue with pandoc's processing of beamer's `<...>` notation. More recent (>= 2.7) pandoc versions manage these overlays without trouble, so such a filter is no longer necessary. However, newer pandoc versions also forced me to change the way I marked up written-out lectures (see, again, the [Easy Lecture Slides M.D.](http://github.com/agoldst/elsmd) documentation), so the markdown-processing stage uses a [lua filter](inst/elsmd/noslide.lua) to remove native Divs with the `noslide` class.
 
 ## Grid positioning
 
