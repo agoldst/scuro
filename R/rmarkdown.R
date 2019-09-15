@@ -36,9 +36,6 @@
 #' \code{plot_font} is \code{"sansfont"} or \code{"mainfont"}, the
 #' corresponding font options will be used by default.
 #'
-#' @param slide_level for slides from notes only (not from scripts), set the
-#' pandoc slide level (headers at or above the level start new slides).
-#'
 #' @param scuro whether to apply the scuro color scheme to slides themselves.
 #'
 #' @return an R Markdown output format used by
@@ -60,7 +57,6 @@ scuro_md <- function (
         dev="tikz",
         plot_font="sansfont",
         plot_font_options=NULL,
-        slide_level=1,
         scuro=TRUE) {
 
     result <- rmarkdown::md_document(
@@ -100,7 +96,6 @@ scuro_md <- function (
         }
         meta$output[["scuro::scuro_md"]]$highlight <- highlight
         meta$output[["scuro::scuro_md"]]$highlight_paper <- highlight_paper
-        meta$output[["scuro::scuro_md"]]$slide_level <- slide_level
         writeLines(c(
                 "---",
                 yaml::as.yaml(meta),
@@ -217,15 +212,11 @@ render_pdf <- function (input,
         pandoc_opts <- paste0(
             'PANDOC_OPTIONS="--highlight-style=', hlts,'"')
 
-        slide_level <- meta$output[["scuro::scuro_md"]][["slide_level"]]
-        if (!is.null(slide_level)) {
-            slide_level <- paste0("NOTES_SLIDE_LEVEL=", slide_level)
-        }
     }
     target <- file.path(type, sub("\\.md$", ".pdf", basename(input)))
 
     makefile <- system.file(file.path("elsmd", "Makefile"), package="scuro")
-    overlay_filter <- system.file(file.path("elsmd", "overlay_filter"),
+    noslide_filter <- system.file(file.path("elsmd", "noslide.lua"),
                                   package="scuro")
     slides_template <- system.file(file.path("elsmd", "elsmd-slides.latex"),
                                    package="scuro")
@@ -233,10 +224,9 @@ render_pdf <- function (input,
                                    package="scuro")
     for (t in seq_along(target)) {
         system2("make", c(
-            paste0("OVERLAY_FILTER=", overlay_filter),
+            paste0("NOSLIDE=", noslide_filter),
             paste0("SLIDES_TMPL=", slides_template),
             paste0("SCRIPT_TMPL=", script_template),
-            slide_level,
             pandoc_opts[t],
             "NOTES=notes_md", "SCRIPTS=scripts_md",
             "SCURO=\"\"",   # but rendering scuro_md ensures scuro: true in YAML

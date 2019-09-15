@@ -13,6 +13,5 @@ Suggests:
     ggplot2 (>= 2.2.0),
     testthat
 License: GPL3
-SystemRequirements: python
 LazyData: true
-RoxygenNote: 6.0.1
+RoxygenNote: 6.1.1

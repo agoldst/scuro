@@ -6,6 +6,12 @@ d <- file.path(tmp, "test")
 
 tmpl_files <- c("Makefile", "sources.bib", "test.Rmd")
 test_that("all expected files are present", {
+    # FUN FACT: devtools::test() / RStudio "Test Package" will fail here
+    # because rmarkdown::draft won't find the template files because
+    # devtools::test() loads the package using pkgload::load_all
+    # which modifies system.file to find files in "./inst" but this
+    # "shim" is not called by system.file when it's invoked in
+    # previously loaded packages like rmarkdown.
     rmarkdown::draft(d, "article", "scuro", edit=F)
 
     expect_equal(list.files(d, recursive=T), tmpl_files)

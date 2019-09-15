@@ -15,38 +15,34 @@ library(knitr)  # for kable (see below)
 library(ggplot2)
 ```
 
+
 # for written-out talks...
-
-Sometimes you want to speak from a written-out script rather than notes. This file demonstrates this approach. Note the use of horizontal rules or second-level headers to start slides and first-level headers to end them. Text between the end of one slide and the start of the next will appear only in the script. (This paragraph follows the title slide. A first-level header is needed to demarcate the start of the script.)
-
------
 
 > - text slide with an incremental
 > - build
 
-# First-level headers close slides
 
-And those headers appear only in the script. The incremental build is collapsed in the script as well.
+::: noslide
+Sometimes you want to speak from a written-out script rather than notes. This file demonstrates this approach. Text that goes only in the script, and not on slides, should be placed in a pandoc Div delimited by `::: noslide` and `:::`.
 
-## an example table
+Incremental builds are collapsed in the script as well.
+:::
+
+# an example table
 
 ```{r}
 kable(mtcars[1:5, 1:5],
       caption="Something about cars")
 ```
 
-# \ 
-
-If you'd rather have a blank than a bold header in the script, use `# \ ` (*a backslash followed by a space*) to terminate the slide. (An empty header is eliminated by knitting.) A new slide also terminates the previous slide, as in the following examples.
-
-## an example graphic
+# an example graphic
 
 ```{r graph, fig.cap="I think that I shall never see"}
 ggplot(trees, aes(Girth, Height)) +
     geom_point(color="white")
 ```
 
-## ugly examples of custom placement and sizing
+# ugly examples of custom placement and sizing
 
 ```{r displaced, textblock_width=2.75, textblock_pos=c(0, 1), fig.height=3, fig.width=2, out.height=4, center=T}
 p <- ggplot(mtcars, aes(factor(cyl))) +
@@ -73,11 +69,11 @@ a cautionary tale.
 
 \vspace{8\TPVertModule}
 
-# \ 
-
+::: noslide
 On the script, the `textpos` grid is shrunk down. Note too that `textblock`s take up no vertical space, so to prevent overprinting in the script you must manually insert some vertical space with `\vspace`. Extra vertical space at the bottom of a slide will have no effect on the slide output (just the script).
+:::
 
-## example code display
+# example code display
 
 ```{r code, echo=T}
 cor(anscombe$x1, anscombe$y1)
@@ -86,7 +82,6 @@ cor(anscombe$x2, anscombe$y2)
 
 Definitely don't need to visualize.
 
-# final remark
-
+::: noslide
 Nonetheless, don't think plotting the data is synonymous with analyzing it. Let's discuss....
-
+:::

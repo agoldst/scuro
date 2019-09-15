@@ -20,13 +20,13 @@ library(ggplot2)
 > - with an incremental
 > - build
 
-\note{<1>}{
+\note<1>{
 
 And different notes on the first
 
 }
 
-\note{<2>}{
+\note<2>{
 
 and second increments.
 
