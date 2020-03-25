@@ -1,6 +1,6 @@
 Package: scuro
 Title: An R Markdown Beamer-Presentation Setup
-Version: 0.1
+Version: 0.2
 Authors@R: person("Andrew", "Goldstone", email = "andrew.goldstone@gmail.com", role = c("aut", "cre"))
 Description: This package provides a setup for creating beamer presentations with a dark-on-light color scheme from R markdown.
 Depends: 
