@@ -17,7 +17,8 @@ all: $(pdfs)
 # rmarkdown::render cleans up most intermediate files but leaves
 # these biber outputs
 tex_intermediates := $(patsubst %.tex,%.run.xml,$(texs)) \
-    $(patsubst %.tex,%.bbl,$(texs))
+    $(patsubst %.tex,%.bbl,$(texs)) \
+    $(patsubst %.tex,%.log,$(texs))
 
 clean:
 	rm -f $(texs)
