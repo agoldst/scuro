@@ -124,7 +124,6 @@ scuro_md <- function (
     result$knitr$opts_chunk$dark_theme <- scuro
     result$knitr$knit_hooks$dark_theme <- set_dark_theme
 
-
     result
 }
 
@@ -218,13 +217,16 @@ render_pdf <- function (input,
     makefile <- system.file(file.path("elsmd", "Makefile"), package="scuro")
     noslide_filter <- system.file(file.path("elsmd", "noslide.lua"),
                                   package="scuro")
+    notes_filter <- system.file(file.path("elsmd", "notes.lua"),
+                                package="scuro")
     slides_template <- system.file(file.path("elsmd", "elsmd-slides.latex"),
                                    package="scuro")
     script_template <- system.file(file.path("elsmd", "beamerarticle.latex"),
                                    package="scuro")
     for (t in seq_along(target)) {
         system2("make", c(
-            paste0("NOSLIDE=", noslide_filter),
+            paste0("NOSLIDE_LUA=", noslide_filter),
+            paste0("NOTES_LUA=", notes_filter),
             paste0("SLIDES_TMPL=", slides_template),
             paste0("SCRIPT_TMPL=", script_template),
             pandoc_opts[t],

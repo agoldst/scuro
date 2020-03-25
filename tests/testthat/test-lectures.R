@@ -11,6 +11,7 @@ test_that("all expected files are present", {
         c("Makefile",
           file.path("notes", "notes-sample.Rmd"),
           file.path("scripts", "script-sample.Rmd"),
+          "slide-meta.yaml",
           "test.Rmd"))
     unlink(d, recursive=T)
     expect_false(file.exists(d))

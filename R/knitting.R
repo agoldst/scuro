@@ -137,7 +137,7 @@ tikz_setup_hook <- function (before, options, envir) {
 
         plotfont <- options$plot_font
         plotfont_opt <- options$plot_font_options
-        if (!is.character(plotfont) || plotfont == "sansfont") {
+        if (!is.character(plotfont) || plotfont %in% c("", "sansfont")) {
             plotfont <- rmarkdown::metadata$sansfont
             if (is.null(plotfont_opt))  {
                 plotfont_opt <- rmarkdown::metadata$sansfontoptions

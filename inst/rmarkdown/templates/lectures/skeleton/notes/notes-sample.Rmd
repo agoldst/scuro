@@ -1,6 +1,5 @@
 ---
 title: Talk of Talks
-author: Talky Talker
 date: Day of the Talk
 sansfont: Gill Sans
 output:
