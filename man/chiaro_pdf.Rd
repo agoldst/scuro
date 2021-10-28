@@ -4,11 +4,21 @@
 \alias{chiaro_pdf}
 \title{A format for article classes}
 \usage{
-chiaro_pdf(fig_width = 4, fig_height = 2, fig_crop = TRUE,
-  fig_caption = TRUE, dev = "tikz", highlight = "default",
-  keep_tex = TRUE, citation_package = c("none", "biblatex"),
-  latex_engine = "xelatex", plot_font = "mainfont",
-  plot_font_options = NULL, pandoc_args = NULL, ...)
+chiaro_pdf(
+  fig_width = 4,
+  fig_height = 2,
+  fig_crop = TRUE,
+  fig_caption = TRUE,
+  dev = "tikz",
+  highlight = "default",
+  keep_tex = TRUE,
+  citation_package = c("none", "biblatex"),
+  latex_engine = "xelatex",
+  plot_font = "mainfont",
+  plot_font_options = NULL,
+  pandoc_args = NULL,
+  ...
+)
 }
 \arguments{
 \item{fig_width}{Natural figure width in inches. This is rescaled according

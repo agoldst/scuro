@@ -3,7 +3,6 @@
 \docType{package}
 \name{scuro}
 \alias{scuro}
-\alias{scuro-package}
 \title{An R Markdown Beamer-Presentation Setup}
 \description{
 This package helps to produce beamer presentations with a dark-on-light

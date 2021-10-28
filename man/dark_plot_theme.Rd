@@ -4,8 +4,12 @@
 \alias{dark_plot_theme}
 \title{A dark ggplot2 theme suitable for slides}
 \usage{
-dark_plot_theme(base_size = 9, base_family = "", dark = "gray10",
-  light = "white")
+dark_plot_theme(
+  base_size = 9,
+  base_family = "",
+  dark = "gray10",
+  light = "white"
+)
 }
 \arguments{
 \item{base_size}{general text-size parameter in points (??)}

@@ -4,10 +4,18 @@
 \alias{scuro_md}
 \title{Intermediate markdown format}
 \usage{
-scuro_md(fig_width = 4.5, fig_height = 2.75, fig_crop = TRUE,
-  highlight = "zenburn", highlight_paper = "monochrome",
-  latex_engine = "xelatex", dev = "tikz", plot_font = "sansfont",
-  plot_font_options = NULL, scuro = TRUE)
+scuro_md(
+  fig_width = 4.5,
+  fig_height = 2.75,
+  fig_crop = TRUE,
+  highlight = "zenburn",
+  highlight_paper = "monochrome",
+  latex_engine = "xelatex",
+  dev = "tikz",
+  plot_font = "sansfont",
+  plot_font_options = NULL,
+  scuro = TRUE
+)
 }
 \arguments{
 \item{fig_width, fig_height}{default figure dimensions (inches). Note that
