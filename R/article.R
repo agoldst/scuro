@@ -60,7 +60,7 @@ chiaro_pdf <- function (
         dev="tikz",
         highlight="default",
         keep_tex=TRUE,
-        citation_package=c("none", "biblatex"),
+        citation_package=c("default", "biblatex"),
         latex_engine="xelatex",
         plot_font="mainfont",
         plot_font_options=NULL,
