@@ -20,7 +20,7 @@ thanks: |
     I am grateful to Oscar Wilde, naturally. For the text I have gone to
     \url{http://marxists.org}, but see the bibliography.\nocite{wilde:soul}
 titlefont: Garamond Premier Pro Display
----
+...
 
 The chief advantage that would result from the establishment of Socialism is, undoubtedly, the fact that Socialism would relieve us from that sordid necessity of living for others which, in the present condition of things, presses so hardly upon almost everybody. In fact, scarcely anyone at all escapes.
 
