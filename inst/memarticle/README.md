@@ -16,11 +16,7 @@ If the title block layout used here does not appeal, set `manual-title: true` (i
 
 On my system, the example [paper.md](paper.md) is converted into this PDF: [paper.pdf](http://andrewgoldstone.com/memarticle/paper.pdf). I have used a commercial font, Garamond Premier Pro. Change `mainfont` (and `titlefont`, and the corresponding `*options`) to your own choices. The name of any system font should work.
 
-Note in the example `paper.md` file the use of `classoption` to set symmetric margins. More exacting control over the overall page layout is best achieved by writing a file of LaTeX using `memoir`'s layout facilities to include in the preamble. If the styling file is called `layout.tex`, then change the Makefile definition of `PANDOC_OPTIONS` to insert the relevant file into the preamble:
-
-```Make
-PANDOC_OPTIONS := -H layout.tex
-```
+Note in the example `paper.md` file the use of `classoption: [oneside]` to set symmetric margins. More exacting control over the overall page layout is best achieved by using `memoir`'s layout commands in the document preamble, by writing LaTeX in the `header-includes:` YAML field.
 
 ## Chicago Style
 
@@ -38,3 +34,7 @@ Note that the bibliography path is relative to the `out` directory that is creat
 Footnotes are also formatted according to Chicago's recommendations. To use widely spaced ellipses, specify `chicago-ellipses: true`.
 
 If you use full citations in notes and do not want a bibliography, use option `nobib: true`.
+
+## Relationship to pandoc defaults
+
+The template is closely modeled on pandoc's [default.latex](https://github.com/jgm/pandoc/blob/master/data/templates/default.latex) but I do not keep up with every change made upstream. The current `memoir-article.latex` follows the template in pandoc 2.16.
